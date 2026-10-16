@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "sha256": "e49ae51fd312dd27ea98ad4da81f3f87e5db2b04674c626503631a562be758ab",
+  "final_exact_archive": true,
+  "environment": "Another genuinely fresh venv from final exact ZIP; no Playwright installed; unavailable browser-binary path",
+  "core_pytest": "111 passed, zero skipped, 1 upstream deprecation warning",
+  "npm_ci": "PASS",
+  "typescript_production_build": "PASS",
+  "supported_backend_startup": "127.0.0.1:8001",
+  "actual_http_checks": {
+    "health_ready": true,
+    "production_ui": true,
+    "valid_command": "OK; durable audit; replay advanced",
+    "original_accepted_bytes": "REPLAY; protected state/replay unchanged",
+    "payload_tamper": "AUTH_FAILED; protected state/replay unchanged",
+    "evidence_export": 200
+  },
+  "optional_browser_missing": {
+    "status": "BLOCKED",
+    "exit_code": 2,
+    "message": "BLOCKED: optional Playwright package is not installed. Run: python -m pip install playwright"
+  },
+  "actual_production_browser": {
+    "status": "PASS",
+    "passed": 30,
+    "total": 30,
+    "javascript_errors": [],
+    "qualification": "External optional test toolchain drove real final-extracted UI/API; the clean core venv still has no Playwright.",
+    "checks": [
+      {
+        "name": "New-session fixture belongs to the new session, not a stale React closure",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for OK",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for OK",
+        "passed": true
+      },
+      {
+        "name": "Valid command updates committed state",
+        "passed": true
+      },
+      {
+        "name": "Formatter preserves duplicate attack bytes",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for INVALID_JSON",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for INVALID_JSON",
+        "passed": true
+      },
+      {
+        "name": "Formatter preserves malformed attack bytes",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for INVALID_JSON",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for INVALID_JSON",
+        "passed": true
+      },
+      {
+        "name": "Valid formatting preserves signature and authenticated values",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for OK",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for OK",
+        "passed": true
+      },
+      {
+        "name": "Whitespace/key-order format remains HMAC-valid",
+        "passed": true
+      },
+      {
+        "name": "Changing payload never silently re-signs",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for AUTH_FAILED",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for AUTH_FAILED",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for REPLAY",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for REPLAY",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for NOT_AUTHORISED",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for NOT_AUTHORISED",
+        "passed": true
+      },
+      {
+        "name": "Authenticated observer still fails permissions",
+        "passed": true
+      },
+      {
+        "name": "Exact editor UTF-8 bytes received for OK",
+        "passed": true
+      },
+      {
+        "name": "Proof summary uses persisted receiver facts for OK",
+        "passed": true
+      },
+      {
+        "name": "Telemetry is independent of protected spacecraft mode",
+        "passed": true
+      },
+      {
+        "name": "Keyboard Enter opens help and Escape closes it",
+        "passed": true
+      },
+      {
+        "name": "Audit row keyboard inspection uses real persisted decision",
+        "passed": true
+      },
+      {
+        "name": "Desktop has no page-level horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "Mobile proof/editor layout has no page-level horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "No uncaught browser runtime errors",
+        "passed": true
+      }
+    ]
+  }
+}

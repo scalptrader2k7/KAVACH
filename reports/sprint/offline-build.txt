@@ -1,0 +1,6 @@
+
+  .arena/offline/app.js   284.0kb
+  .arena/offline/app.css   54.8kb
+
+⚡ Done in 194ms
+/home/user/kavach/preview/Kavach-interactive-prototype.html: 1,148,633 bytes; self-contained, no external resources

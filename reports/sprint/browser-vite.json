@@ -1,0 +1,130 @@
+{
+  "status": "PASS",
+  "executed_at": "2026-10-16T10:47:09Z",
+  "passed": 30,
+  "total": 30,
+  "checks": [
+    {
+      "name": "New-session fixture belongs to the new session, not a stale React closure",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for OK",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for OK",
+      "passed": true
+    },
+    {
+      "name": "Valid command updates committed state",
+      "passed": true
+    },
+    {
+      "name": "Formatter preserves duplicate attack bytes",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for INVALID_JSON",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for INVALID_JSON",
+      "passed": true
+    },
+    {
+      "name": "Formatter preserves malformed attack bytes",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for INVALID_JSON",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for INVALID_JSON",
+      "passed": true
+    },
+    {
+      "name": "Valid formatting preserves signature and authenticated values",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for OK",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for OK",
+      "passed": true
+    },
+    {
+      "name": "Whitespace/key-order format remains HMAC-valid",
+      "passed": true
+    },
+    {
+      "name": "Changing payload never silently re-signs",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for AUTH_FAILED",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for AUTH_FAILED",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for REPLAY",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for REPLAY",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for NOT_AUTHORISED",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for NOT_AUTHORISED",
+      "passed": true
+    },
+    {
+      "name": "Authenticated observer still fails permissions",
+      "passed": true
+    },
+    {
+      "name": "Exact editor UTF-8 bytes received for OK",
+      "passed": true
+    },
+    {
+      "name": "Proof summary uses persisted receiver facts for OK",
+      "passed": true
+    },
+    {
+      "name": "Telemetry is independent of protected spacecraft mode",
+      "passed": true
+    },
+    {
+      "name": "Keyboard Enter opens help and Escape closes it",
+      "passed": true
+    },
+    {
+      "name": "Audit row keyboard inspection uses real persisted decision",
+      "passed": true
+    },
+    {
+      "name": "Desktop has no page-level horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "Mobile proof/editor layout has no page-level horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "No uncaught browser runtime errors",
+      "passed": true
+    }
+  ],
+  "javascript_errors": [],
+  "note": "Real FastAPI responses and committed SQLite state; no mocked verdicts. Isolated test runtime only."
+}

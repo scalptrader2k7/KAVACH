@@ -1,0 +1,9 @@
+{
+  "8000/127.0.0.1": 200,
+  "8000/evil.invalid": 400,
+  "5173/127.0.0.1": 200,
+  "5173/evil.invalid": 403,
+  "unacknowledged_external_vite_exit": 1,
+  "executed_at": "2026-10-16T10:46:29Z",
+  "status": "PASS"
+}
