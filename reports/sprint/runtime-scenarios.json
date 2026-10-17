@@ -1,0 +1,3359 @@
+{
+  "suite_id": "60e82fd0-5232-42d3-9592-78b10e5ef079",
+  "session_id": "KVC-37B1EB67",
+  "owner_session_id": "KVC-BC34C6C7",
+  "executed_at": 1792147899,
+  "clock": "Injected UTC Unix time 1792137600",
+  "passed": 29,
+  "total": 29,
+  "results": [
+    {
+      "name": "Valid operator command",
+      "expected": "ACCEPTED",
+      "observed": "ACCEPTED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "5b214f9e-045a-490b-bd79-f5a59c947488",
+      "note": "",
+      "result": {
+        "event_id": "5b214f9e-045a-490b-bd79-f5a59c947488",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "ACCEPTED",
+        "reason_code": "OK",
+        "explanation": "All checks passed. Simulated spacecraft state updated.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "PASS",
+            "explanation": "State, replay protection, and acceptance audit committed atomically."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": true,
+        "telemetry_before": null,
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "a1e2bc59153853bc4efc971f16672b3c0c68e36ba97bd99c3d3a3b33a8b34a2d",
+        "message": {
+          "version": 1,
+          "message_id": "c7bee107-811e-4771-b075-ec6adb1eb67f",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "d6ffc42ab95fbf8260b64ecb068ba9617be968bdb9883034af7a39620df98abb",
+          "payload": {
+            "mode": "POWER_SAVING"
+          }
+        },
+        "duration_ms": 0.37,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": true,
+        "replay_sequence_before": 0,
+        "replay_sequence_after": 1,
+        "submitted_text": "{\"version\": 1, \"message_id\": \"c7bee107-811e-4771-b075-ec6adb1eb67f\", \"message_type\": \"COMMAND\", \"sender_id\": \"operator-01\", \"target_id\": \"KAVACH-SAT-01\", \"key_id\": \"operator-key-01\", \"sequence\": 1, \"issued_at\": 1792137600, \"expires_at\": 1792137660, \"action\": \"SET_MODE\", \"payload\": {\"mode\": \"POWER_SAVING\"}, \"auth_tag\": \"d6ffc42ab95fbf8260b64ecb068ba9617be968bdb9883034af7a39620df98abb\"}"
+      }
+    },
+    {
+      "name": "Tampered payload",
+      "expected": "AUTH_FAILED",
+      "observed": "AUTH_FAILED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "f6b932d0-d506-4eb2-9603-daddedb558fe",
+      "note": "",
+      "result": {
+        "event_id": "f6b932d0-d506-4eb2-9603-daddedb558fe",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "AUTH_FAILED",
+        "explanation": "HMAC does not match. The message may have been modified after signing.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "FAIL",
+            "explanation": "HMAC does not match. The message may have been modified after signing."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "a63bc70e4b6bcc2b1bd48cf12537019f7d9f8bb251c9c469f3bead704871ea7a",
+        "message": {
+          "version": 1,
+          "message_id": "7da8f861-30d9-4d37-b862-d0b4052ef684",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 2,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "9e9547476e5a8dcc63a880cd11294d46ae9882ac264c89ebe119dd40c792fbaa",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.2,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Replay accepted message",
+      "expected": "REPLAY",
+      "observed": "REPLAY",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "61131181-c127-4af0-b6d2-6caefb9d0aa6",
+      "note": "",
+      "result": {
+        "event_id": "61131181-c127-4af0-b6d2-6caefb9d0aa6",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "REPLAY",
+        "explanation": "This message ID was already accepted in this stream.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "FAIL",
+            "explanation": "This message ID was already accepted in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "a1e2bc59153853bc4efc971f16672b3c0c68e36ba97bd99c3d3a3b33a8b34a2d",
+        "message": {
+          "version": 1,
+          "message_id": "c7bee107-811e-4771-b075-ec6adb1eb67f",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "d6ffc42ab95fbf8260b64ecb068ba9617be968bdb9883034af7a39620df98abb",
+          "payload": {
+            "mode": "POWER_SAVING"
+          }
+        },
+        "duration_ms": 0.21,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": 1,
+        "replay_sequence_after": 1
+      }
+    },
+    {
+      "name": "Expired message",
+      "expected": "EXPIRED",
+      "observed": "EXPIRED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "be4acb02-98ba-49d9-8b6b-f652c53bc12b",
+      "note": "",
+      "result": {
+        "event_id": "be4acb02-98ba-49d9-8b6b-f652c53bc12b",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "EXPIRED",
+        "explanation": "Message has expired at the captured receiver time.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "FAIL",
+            "explanation": "Message has expired at the captured receiver time."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "8f4380f5a78db02d3ce9697b3408a44ac7085fb6980f4be8110ceced3b1646dd",
+        "message": {
+          "version": 1,
+          "message_id": "86ff08ba-43e7-40e3-960a-ad0e0c3ccf56",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 3,
+          "issued_at": 1792137539,
+          "expires_at": 1792137599,
+          "action": "SET_MODE",
+          "auth_tag": "4d426be7c164720deb495a7c8b316357faff24b50db86f46cc93cd59ff62c287",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.2,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Future timestamp",
+      "expected": "CLOCK_SKEW",
+      "observed": "CLOCK_SKEW",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "194b657d-2e8b-4c74-9af0-eaf5a0d78790",
+      "note": "",
+      "result": {
+        "event_id": "194b657d-2e8b-4c74-9af0-eaf5a0d78790",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "CLOCK_SKEW",
+        "explanation": "issued_at exceeds the permitted 5-second future clock skew.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "FAIL",
+            "explanation": "issued_at exceeds the permitted 5-second future clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "f5fba98be8bd08a82b66bb28057c845cb6a8fb09bfb0dd65633f5372261caa0c",
+        "message": {
+          "version": 1,
+          "message_id": "5f4c2ee8-7769-4e58-a5af-854d08b774bf",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 4,
+          "issued_at": 1792137606,
+          "expires_at": 1792137666,
+          "action": "SET_MODE",
+          "auth_tag": "cb1a7a0d379ba18be87959cfb7f2f38ae05c1257192c8d348a7147f8e2206470",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.19,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Unauthorised observer",
+      "expected": "NOT_AUTHORISED",
+      "observed": "NOT_AUTHORISED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "40c43525-76f7-4d89-9768-41d2f6504a5c",
+      "note": "",
+      "result": {
+        "event_id": "40c43525-76f7-4d89-9768-41d2f6504a5c",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "NOT_AUTHORISED",
+        "explanation": "Authenticated observer-01 is not permitted to perform SET_MODE. A valid HMAC does not grant permission.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "FAIL",
+            "explanation": "Authenticated observer-01 is not permitted to perform SET_MODE. A valid HMAC does not grant permission."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "3485b1ff61675f4c19c720f125f924f027f5047b91baa1bc989748a90e0db40c",
+        "message": {
+          "version": 1,
+          "message_id": "153df0f2-6285-4250-9e7b-aefe83327ffe",
+          "message_type": "COMMAND",
+          "sender_id": "observer-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "observer-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "5b01f565975c517c57a02120f41d520a7ebbd8bba3d38d53cc394eb740e24c53",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.16,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Invalid payload range",
+      "expected": "PAYLOAD_INVALID",
+      "observed": "PAYLOAD_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "4d75d92e-c392-4dc5-a714-5a4a77ea93d1",
+      "note": "",
+      "result": {
+        "event_id": "4d75d92e-c392-4dc5-a714-5a4a77ea93d1",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "PAYLOAD_INVALID",
+        "explanation": "seconds must be an integer from 1 to 60, with no extra fields.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "FAIL",
+            "explanation": "seconds must be an integer from 1 to 60, with no extra fields."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "4baea680edcdc72823f0c1424f7d6c052b71ca8dc195f6f982c041bec67ca526",
+        "message": {
+          "version": 1,
+          "message_id": "c8ec25ba-5d43-4599-a7df-140b380042b7",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 5,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_REPORT_INTERVAL",
+          "auth_tag": "ab0cb1b69337e848056ff74d22e9d2474d5f3cbf528046f4b9812fdc4d30a25c",
+          "payload": {
+            "seconds": 61
+          }
+        },
+        "duration_ms": 0.26,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Valid telemetry",
+      "expected": "ACCEPTED",
+      "observed": "ACCEPTED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "7295a5d3-28bf-4cf9-a1a7-05b4e1fc294c",
+      "note": "",
+      "result": {
+        "event_id": "7295a5d3-28bf-4cf9-a1a7-05b4e1fc294c",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "ACCEPTED",
+        "reason_code": "OK",
+        "explanation": "Telemetry received. Protected spacecraft mode is unchanged.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "satellite-01 is authorised for TELEMETRY_STATUS under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "PASS",
+            "explanation": "State, replay protection, and acceptance audit committed atomically."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "POWER_SAVING",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "c168f58503d4d4b9b3b0f7523667d124289f09b1f2ed78ffcb4782c0db9d985c",
+        "message": {
+          "version": 1,
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e",
+          "message_type": "TELEMETRY",
+          "sender_id": "satellite-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "satellite-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "TELEMETRY_STATUS",
+          "auth_tag": "df67d09e316294fd98eede6b4cb3579b567438d0f4c4bcfcf94334adddc2051e",
+          "payload": {
+            "battery_pct": 87,
+            "temperature_c": 24,
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.27,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": true,
+        "replay_sequence_before": 0,
+        "replay_sequence_after": 1,
+        "submitted_text": "{\"version\": 1, \"message_id\": \"dd550045-a9b0-4b86-8f5a-fdb22feaff1e\", \"message_type\": \"TELEMETRY\", \"sender_id\": \"satellite-01\", \"target_id\": \"KAVACH-SAT-01\", \"key_id\": \"satellite-key-01\", \"sequence\": 1, \"issued_at\": 1792137600, \"expires_at\": 1792137660, \"action\": \"TELEMETRY_STATUS\", \"payload\": {\"battery_pct\": 87, \"temperature_c\": 24, \"mode\": \"SAFE\"}, \"auth_tag\": \"df67d09e316294fd98eede6b4cb3579b567438d0f4c4bcfcf94334adddc2051e\"}"
+      }
+    },
+    {
+      "name": "Observer status request",
+      "expected": "ACCEPTED",
+      "observed": "ACCEPTED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "ee3912b5-314e-4d15-bce4-6310e095f9d1",
+      "note": "",
+      "result": {
+        "event_id": "ee3912b5-314e-4d15-bce4-6310e095f9d1",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "ACCEPTED",
+        "reason_code": "OK",
+        "explanation": "All checks passed. Command accepted; no protected state change.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "observer-01 is authorised for GET_STATUS under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "PASS",
+            "explanation": "State, replay protection, and acceptance audit committed atomically."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "e6b441dd69c5c2ade6a7ce4d26ffe9161fab6fb90c2aa78f0699f42409064f31",
+        "message": {
+          "version": 1,
+          "message_id": "a5935666-c981-4023-a0be-0925ebdc30d5",
+          "message_type": "COMMAND",
+          "sender_id": "observer-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "observer-key-01",
+          "sequence": 2,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "GET_STATUS",
+          "auth_tag": "3388c0f83f90bee437141ab914a51b3e186cad82dd57f25e1f7a1d85269e4b25",
+          "payload": {}
+        },
+        "duration_ms": 0.27,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": true,
+        "replay_sequence_before": 0,
+        "replay_sequence_after": 2,
+        "submitted_text": "{\"version\": 1, \"message_id\": \"a5935666-c981-4023-a0be-0925ebdc30d5\", \"message_type\": \"COMMAND\", \"sender_id\": \"observer-01\", \"target_id\": \"KAVACH-SAT-01\", \"key_id\": \"observer-key-01\", \"sequence\": 2, \"issued_at\": 1792137600, \"expires_at\": 1792137660, \"action\": \"GET_STATUS\", \"payload\": {}, \"auth_tag\": \"3388c0f83f90bee437141ab914a51b3e186cad82dd57f25e1f7a1d85269e4b25\"}"
+      }
+    },
+    {
+      "name": "Unknown key",
+      "expected": "KEY_UNKNOWN",
+      "observed": "KEY_UNKNOWN",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "80f57511-ada7-4eda-ab80-0f3b52d56ffe",
+      "note": "",
+      "result": {
+        "event_id": "80f57511-ada7-4eda-ab80-0f3b52d56ffe",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "KEY_UNKNOWN",
+        "explanation": "Key identifier is not registered. Sender remains unverified.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "FAIL",
+            "explanation": "Key identifier is not registered. Sender remains unverified."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "d55d7a29a7be8997b581e3554c2f03872d61529ec322c6132ba6ee4645b6fd6c",
+        "message": {
+          "version": 1,
+          "message_id": "c8ddc56f-5571-4aad-b6e2-f33e67020748",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "unknown-key",
+          "sequence": 6,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "155a16abe8252c5a0e6b812b58133bbd332bcc90b5b5d4486e45d57aedee650c",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.13,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Mismatched sender",
+      "expected": "IDENTITY_MISMATCH",
+      "observed": "IDENTITY_MISMATCH",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "2308015b-0856-4709-b0d7-f56c845d96a8",
+      "note": "",
+      "result": {
+        "event_id": "2308015b-0856-4709-b0d7-f56c845d96a8",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "IDENTITY_MISMATCH",
+        "explanation": "Registered key does not belong to the claimed sender.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "FAIL",
+            "explanation": "Registered key does not belong to the claimed sender."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "e13f711b6eecfa390cf4a6da57aab6479b31c1949a3454ade2139eb4cd3cdadc",
+        "message": {
+          "version": 1,
+          "message_id": "f916ee6e-2523-40d7-a464-003465f139fb",
+          "message_type": "COMMAND",
+          "sender_id": "observer-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 7,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "d557b94d87e9dba27c104caa9c72d83e724d47fe6a78cab2813bb1b7d4cc278d",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.15,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Excessive lifetime",
+      "expected": "LIFETIME_INVALID",
+      "observed": "LIFETIME_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "3ade4729-4f22-467c-b23f-140125a6e9e0",
+      "note": "",
+      "result": {
+        "event_id": "3ade4729-4f22-467c-b23f-140125a6e9e0",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "LIFETIME_INVALID",
+        "explanation": "Message lifetime must be greater than 0 and at most 60 seconds.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "FAIL",
+            "explanation": "Message lifetime must be greater than 0 and at most 60 seconds."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "514df9af21eaecaba058f8b65884b661206597662c50abe69a0ad8c185ae0a75",
+        "message": {
+          "version": 1,
+          "message_id": "a7563742-50f4-411b-b8ce-7f53c2c1012d",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 8,
+          "issued_at": 1792137600,
+          "expires_at": 1792137661,
+          "action": "SET_MODE",
+          "auth_tag": "c78b387ddcdc2664a8408c6071b73041b137b668f0009e9448cd7548e5dda5cd",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.16,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Out-of-order sequence",
+      "expected": "OUT_OF_ORDER",
+      "observed": "OUT_OF_ORDER",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "f5b638a4-ee09-41d3-b98a-83e1e52cc10f",
+      "note": "",
+      "result": {
+        "event_id": "f5b638a4-ee09-41d3-b98a-83e1e52cc10f",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "OUT_OF_ORDER",
+        "explanation": "Sequence 1 is not greater than the accepted maximum 1.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "FAIL",
+            "explanation": "Sequence 1 is not greater than the accepted maximum 1."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "3f432ed887ed2472e0195aa1e795b70a525b29032523738bb0e1944304021e88",
+        "message": {
+          "version": 1,
+          "message_id": "de52bda6-e423-4e42-8898-68c482932cdf",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "7e76ee3b680e79d1e4e70662f71a9197520c309e8f738aa77b9846fec2a5401f",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.27,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": 1,
+        "replay_sequence_after": 1
+      }
+    },
+    {
+      "name": "Unknown action",
+      "expected": "ACTION_INVALID",
+      "observed": "ACTION_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "6c80c39e-960d-492c-9b4d-28573424257e",
+      "note": "",
+      "result": {
+        "event_id": "6c80c39e-960d-492c-9b4d-28573424257e",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "ACTION_INVALID",
+        "explanation": "Action is not defined for this message type.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "FAIL",
+            "explanation": "Action is not defined for this message type."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "b2bf5680218df22ccca61a55549f8e2951faaff61dc3be8a12ee34ff35aacf01",
+        "message": {
+          "version": 1,
+          "message_id": "5788431f-c308-429d-87ff-cc20ed413631",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 10,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "UNDEFINED",
+          "auth_tag": "c86e396cdcf70bb37e8a82685c4bc6c66af92d5367dce10314c038fa5f50d244",
+          "payload": {}
+        },
+        "duration_ms": 0.25,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Unknown target",
+      "expected": "TARGET_UNKNOWN",
+      "observed": "TARGET_UNKNOWN",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "727a7fd9-e178-4705-a060-1552e7aadbf6",
+      "note": "",
+      "result": {
+        "event_id": "727a7fd9-e178-4705-a060-1552e7aadbf6",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "TARGET_UNKNOWN",
+        "explanation": "Only KAVACH-SAT-01 is a valid target.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "FAIL",
+            "explanation": "Only KAVACH-SAT-01 is a valid target."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "7ebcf5d8848f26560af62a525c263b8fe238e041ce7b58a5d33b100a96b74c84",
+        "message": {
+          "version": 1,
+          "message_id": "a3be6f36-b2dc-4a08-884e-d72aa98e1d0f",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "OTHER-SAT",
+          "key_id": "operator-key-01",
+          "sequence": 11,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "09efdfce28736f5982172199fc0c57f32c1a88ca0f1f5e8ad44005676252ef16",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.27,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Boolean is not integer",
+      "expected": "SCHEMA_INVALID",
+      "observed": "SCHEMA_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "dfef74d9-bf3c-4309-a34c-4c3eca5c1e8e",
+      "note": "",
+      "result": {
+        "event_id": "dfef74d9-bf3c-4309-a34c-4c3eca5c1e8e",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "SCHEMA_INVALID",
+        "explanation": "Only integer, ASCII string, and object values are supported; no coercion is performed.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "FAIL",
+            "explanation": "Only integer, ASCII string, and object values are supported; no coercion is performed."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "7e5667dc3077febcdc023bca32f5d62fb8840d6cfe9d158a8541c077d48afcd0",
+        "message": {
+          "version": 1,
+          "message_id": "c86e2058-e0b3-4e07-8d2c-a7b54eebe6bd",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 12,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_REPORT_INTERVAL",
+          "auth_tag": "ad0baf61efad22686e92dca923547f85239a2aca59d2c0bd59611382c4d6773b",
+          "payload": {}
+        },
+        "duration_ms": 0.23,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Duplicate JSON key",
+      "expected": "INVALID_JSON",
+      "observed": "INVALID_JSON",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "99414b68-d65e-43e3-b3b8-443cd971430c",
+      "note": "",
+      "result": {
+        "event_id": "99414b68-d65e-43e3-b3b8-443cd971430c",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "INVALID_JSON",
+        "explanation": "Duplicate JSON key detected; input left unmodified.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "FAIL",
+            "explanation": "Duplicate JSON key detected; input left unmodified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "55cb469acbd09bb3f4949176698222080fac24ac7811efc03717df07c3c72823",
+        "message": null,
+        "duration_ms": 0.24,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Malformed JSON",
+      "expected": "INVALID_JSON",
+      "observed": "INVALID_JSON",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "a88ed66d-da43-4562-9efc-466beb4ba9dd",
+      "note": "",
+      "result": {
+        "event_id": "a88ed66d-da43-4562-9efc-466beb4ba9dd",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "INVALID_JSON",
+        "explanation": "Message is not valid UTF-8 JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "FAIL",
+            "explanation": "Message is not valid UTF-8 JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "aa4b143348f3e7cc620a0b03986c3a428677bfccc9f998f5a7f447f832fcf389",
+        "message": null,
+        "duration_ms": 0.14,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Unknown envelope field",
+      "expected": "SCHEMA_INVALID",
+      "observed": "SCHEMA_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "495e437b-ee3f-4a88-bf79-809d9e26fae1",
+      "note": "",
+      "result": {
+        "event_id": "495e437b-ee3f-4a88-bf79-809d9e26fae1",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "SCHEMA_INVALID",
+        "explanation": "Envelope fields do not match. Missing: []; unknown field count: 1.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "FAIL",
+            "explanation": "Envelope fields do not match. Missing: []; unknown field count: 1."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "6406207b68ca316798acecc2c64fab39684206cf4fe0c81ec5a6b6a0f0d76700",
+        "message": {
+          "version": 1,
+          "message_id": "9e51515c-6e6a-4331-a44a-834af77e9e15",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 13,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "7e077c03ade1b493fdb333d516a0c707dcbe7da9e2771babc037eaf8555595dd",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.14,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Missing required field",
+      "expected": "SCHEMA_INVALID",
+      "observed": "SCHEMA_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "8f6c31f1-876a-4a54-8880-5b96f17284a5",
+      "note": "",
+      "result": {
+        "event_id": "8f6c31f1-876a-4a54-8880-5b96f17284a5",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "SCHEMA_INVALID",
+        "explanation": "Envelope fields do not match. Missing: ['version']; unknown field count: 0.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "FAIL",
+            "explanation": "Envelope fields do not match. Missing: ['version']; unknown field count: 0."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "cf459225f59ac39c8470e0f18328a0d82030a8a94b291162619ba2cadc011daa",
+        "message": {
+          "message_id": "42e6587b-410b-45c6-a853-e9a820c83c28",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 14,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "d69fd2f382f37a6d0ab4408e38772ba9b3b737a109885ef8d335546ce83e92e0",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.12,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Key order & whitespace invariance",
+      "expected": "ACCEPTED",
+      "observed": "ACCEPTED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "4d41aaaf-1427-44e5-9795-06a9772aa0dd",
+      "note": "",
+      "result": {
+        "event_id": "4d41aaaf-1427-44e5-9795-06a9772aa0dd",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "ACCEPTED",
+        "reason_code": "OK",
+        "explanation": "All checks passed. Simulated spacecraft state updated.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "PASS",
+            "explanation": "State, replay protection, and acceptance audit committed atomically."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "POWER_SAVING",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "state_changed": true,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Accepted satellite fixture",
+          "message_id": "dd550045-a9b0-4b86-8f5a-fdb22feaff1e"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "3847f7ef008325cd84d612988fef825bbd09a60a6a210fa8d0b9b70c02a58a85",
+        "message": {
+          "auth_tag": "32dc981c6aa79c42342674e1b8675f3d3e28ca53d33a1acabb5a5783a39f136a",
+          "action": "SET_MODE",
+          "expires_at": 1792137660,
+          "issued_at": 1792137600,
+          "sequence": 15,
+          "key_id": "operator-key-01",
+          "target_id": "KAVACH-SAT-01",
+          "sender_id": "operator-01",
+          "message_type": "COMMAND",
+          "message_id": "707b6053-de36-4ab3-99f7-69d56c55fe90",
+          "version": 1,
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.32,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": true,
+        "replay_sequence_before": 1,
+        "replay_sequence_after": 15,
+        "submitted_text": "{\n    \"auth_tag\": \"32dc981c6aa79c42342674e1b8675f3d3e28ca53d33a1acabb5a5783a39f136a\",\n    \"payload\": {\n        \"mode\": \"SAFE\"\n    },\n    \"action\": \"SET_MODE\",\n    \"expires_at\": 1792137660,\n    \"issued_at\": 1792137600,\n    \"sequence\": 15,\n    \"key_id\": \"operator-key-01\",\n    \"target_id\": \"KAVACH-SAT-01\",\n    \"sender_id\": \"operator-01\",\n    \"message_type\": \"COMMAND\",\n    \"message_id\": \"707b6053-de36-4ab3-99f7-69d56c55fe90\",\n    \"version\": 1\n}"
+      }
+    },
+    {
+      "name": "Invalid telemetry preserves snapshot",
+      "expected": "PAYLOAD_INVALID",
+      "observed": "PAYLOAD_INVALID",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "e27b6760-813a-43bb-8a5e-0e86703df6a4",
+      "note": "",
+      "result": {
+        "event_id": "e27b6760-813a-43bb-8a5e-0e86703df6a4",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "PAYLOAD_INVALID",
+        "explanation": "battery_pct must be an integer from 0 to 100.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "FAIL",
+            "explanation": "battery_pct must be an integer from 0 to 100."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "18ddd7a1451ebe0b80b059d1167ec80efc452025911ccbfabff1c0748eb84af5",
+        "message": {
+          "version": 1,
+          "message_id": "31d791e7-19ec-4e70-b9c7-ec031689e808",
+          "message_type": "TELEMETRY",
+          "sender_id": "satellite-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "satellite-key-01",
+          "sequence": 2,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "TELEMETRY_STATUS",
+          "auth_tag": "1e76bcb9a931b91b19a1d71cde2c12bcffa613f204f12e3d528c7184015315cd",
+          "payload": {
+            "battery_pct": 101,
+            "temperature_c": 24,
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.18,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Invalid high sequence",
+      "expected": "AUTH_FAILED",
+      "observed": "AUTH_FAILED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "f0240010-7140-44ef-b771-2d4468071f90",
+      "note": "",
+      "result": {
+        "event_id": "f0240010-7140-44ef-b771-2d4468071f90",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "AUTH_FAILED",
+        "explanation": "HMAC does not match. The message may have been modified after signing.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "FAIL",
+            "explanation": "HMAC does not match. The message may have been modified after signing."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": false,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "e0f2049b9c371b6ded302e5f5365bbe464ba86ed4f14611de705b14d40745eb5",
+        "message": {
+          "version": 1,
+          "message_id": "f0d64dcb-23ba-46cd-984d-53131ede221f",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 999999,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "f644d054a6539d576030ae7f73818742af97014fecbdb932ff775fcff4ec449f",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.15,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": null,
+        "replay_sequence_after": null
+      }
+    },
+    {
+      "name": "Valid after high-sequence rejection",
+      "expected": "ACCEPTED",
+      "observed": "ACCEPTED",
+      "passed": true,
+      "state_preserved": true,
+      "effect_matches": true,
+      "event_id": "898de1d1-ceb4-4592-b91f-082b1d2b8127",
+      "note": "",
+      "result": {
+        "event_id": "898de1d1-ceb4-4592-b91f-082b1d2b8127",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "ACCEPTED",
+        "reason_code": "OK",
+        "explanation": "All checks passed. Simulated spacecraft state updated.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "PASS",
+            "explanation": "State, replay protection, and acceptance audit committed atomically."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "state_changed": true,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "NORMAL",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "8e8770b8fb5d42d128665274aa7d80554d09d37846fae6c776f33d3eb53608dd",
+        "message": {
+          "version": 1,
+          "message_id": "38feadd3-8e8a-4f24-95c8-85ba14a418f7",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 17,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "09c26f278f6382088d8584c8b660a2ac7da6b8b9d83648f0e2175be3f394c991",
+          "payload": {
+            "mode": "NORMAL"
+          }
+        },
+        "duration_ms": 0.23,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": true,
+        "replay_sequence_before": 15,
+        "replay_sequence_after": 17,
+        "submitted_text": "{\"version\": 1, \"message_id\": \"38feadd3-8e8a-4f24-95c8-85ba14a418f7\", \"message_type\": \"COMMAND\", \"sender_id\": \"operator-01\", \"target_id\": \"KAVACH-SAT-01\", \"key_id\": \"operator-key-01\", \"sequence\": 17, \"issued_at\": 1792137600, \"expires_at\": 1792137660, \"action\": \"SET_MODE\", \"payload\": {\"mode\": \"NORMAL\"}, \"auth_tag\": \"09c26f278f6382088d8584c8b660a2ac7da6b8b9d83648f0e2175be3f394c991\"}"
+      }
+    },
+    {
+      "name": "Concurrent duplicate / 1",
+      "expected": "ACCEPTED",
+      "observed": "ACCEPTED",
+      "passed": true,
+      "state_preserved": true,
+      "event_id": "8306e816-91c6-4884-ab7e-57f9dd205258",
+      "note": "Two submissions synchronized at a thread barrier. Exactly one must commit.",
+      "result": {
+        "event_id": "8306e816-91c6-4884-ab7e-57f9dd205258",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "ACCEPTED",
+        "reason_code": "OK",
+        "explanation": "All checks passed. Simulated spacecraft state updated.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "PASS",
+            "explanation": "State, replay protection, and acceptance audit committed atomically."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "state_changed": true,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "NORMAL",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "37f921f9a27bfd4f402947693b810c7c161fda0a9c95d21d0d80007b0aa37b3e",
+        "message": {
+          "version": 1,
+          "message_id": "cdc242ba-8077-45ab-b4c6-78f7d7e2bea3",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 18,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "78b18d5ae39365c5a1b8ac90e8808686423f004a92019e2d22085b768af44a64",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.56,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": true,
+        "replay_sequence_before": 17,
+        "replay_sequence_after": 18,
+        "submitted_text": "{\"version\": 1, \"message_id\": \"cdc242ba-8077-45ab-b4c6-78f7d7e2bea3\", \"message_type\": \"COMMAND\", \"sender_id\": \"operator-01\", \"target_id\": \"KAVACH-SAT-01\", \"key_id\": \"operator-key-01\", \"sequence\": 18, \"issued_at\": 1792137600, \"expires_at\": 1792137660, \"action\": \"SET_MODE\", \"payload\": {\"mode\": \"SAFE\"}, \"auth_tag\": \"78b18d5ae39365c5a1b8ac90e8808686423f004a92019e2d22085b768af44a64\"}"
+      }
+    },
+    {
+      "name": "Concurrent duplicate / 2",
+      "expected": "REPLAY",
+      "observed": "REPLAY",
+      "passed": true,
+      "state_preserved": true,
+      "event_id": "c7af9f49-2c52-47fd-8c1d-825d885eae67",
+      "note": "Two submissions synchronized at a thread barrier. Exactly one must commit.",
+      "result": {
+        "event_id": "c7af9f49-2c52-47fd-8c1d-825d885eae67",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "REPLAY",
+        "explanation": "This message ID was already accepted in this stream.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "FAIL",
+            "explanation": "This message ID was already accepted in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "37f921f9a27bfd4f402947693b810c7c161fda0a9c95d21d0d80007b0aa37b3e",
+        "message": {
+          "version": 1,
+          "message_id": "cdc242ba-8077-45ab-b4c6-78f7d7e2bea3",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 18,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "78b18d5ae39365c5a1b8ac90e8808686423f004a92019e2d22085b768af44a64",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 1.67,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": 18,
+        "replay_sequence_after": 18
+      }
+    },
+    {
+      "name": "Replay after engine restart",
+      "expected": "REPLAY",
+      "observed": "REPLAY",
+      "passed": true,
+      "state_preserved": true,
+      "event_id": "5a8713cf-9b12-408e-a572-18a00cad2278",
+      "note": "New engine instance reloads keys, replay records, and state from disk; the web process is not stopped.",
+      "result": {
+        "event_id": "5a8713cf-9b12-408e-a572-18a00cad2278",
+        "session_id": "KVC-37B1EB67",
+        "verdict": "REJECTED",
+        "reason_code": "REPLAY",
+        "explanation": "This message ID was already accepted in this stream.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "FAIL",
+            "explanation": "This message ID was already accepted in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "NOT_RUN",
+            "explanation": "Waiting for preceding checks."
+          }
+        ],
+        "sender_verified": true,
+        "received_at": 1792137600,
+        "protected_state_before": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "SAFE",
+          "report_interval_s": 10
+        },
+        "state_changed": false,
+        "telemetry_before": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "telemetry_after": {
+          "battery_pct": 87,
+          "temperature_c": 24,
+          "mode": "SAFE",
+          "received_at": 1792137600,
+          "source": "Local satellite model"
+        },
+        "policy_version": "kavach-policy/1.0",
+        "input_sha256": "37f921f9a27bfd4f402947693b810c7c161fda0a9c95d21d0d80007b0aa37b3e",
+        "message": {
+          "version": 1,
+          "message_id": "cdc242ba-8077-45ab-b4c6-78f7d7e2bea3",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 18,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "78b18d5ae39365c5a1b8ac90e8808686423f004a92019e2d22085b768af44a64",
+          "payload": {
+            "mode": "SAFE"
+          }
+        },
+        "duration_ms": 0.37,
+        "input_truncated": false,
+        "input_hash_scope": "complete received input",
+        "audit_persisted": true,
+        "replay_state_advanced": false,
+        "replay_sequence_before": 18,
+        "replay_sequence_after": 18
+      }
+    },
+    {
+      "name": "Database commit failure rollback",
+      "expected": "SERVICE_ERROR",
+      "observed": "SERVICE_ERROR",
+      "passed": true,
+      "state_preserved": true,
+      "event_id": null,
+      "note": "Isolated temporary DB. State, audit, and replay roll back; a retry after recovery must succeed.",
+      "result": {
+        "verdict": "SERVICE_ERROR",
+        "reason_code": "SERVICE_ERROR",
+        "explanation": "No execution committed. Database or validator service failed.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "FAIL",
+            "explanation": "Service failure. Transaction rolled back; no execution committed and no persistence claimed."
+          }
+        ],
+        "sender_verified": true,
+        "state_changed": false,
+        "policy_version": "kavach-policy/1.0",
+        "session_id": "KVC-611B7BFA",
+        "protected_state_before": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "audit_persisted": false,
+        "replay_state_advanced": false,
+        "replay_sequence_before": 0,
+        "replay_sequence_after": 0,
+        "message": {
+          "version": 1,
+          "message_id": "b8532327-7f0a-4649-88a7-3a9d1df96596",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "33ce5fa19840e834be41381bd97d67cab21e74bbfe985ad338bce886120d798f",
+          "payload": {
+            "mode": "SAFE"
+          }
+        }
+      }
+    },
+    {
+      "name": "Database audit failure rollback",
+      "expected": "SERVICE_ERROR",
+      "observed": "SERVICE_ERROR",
+      "passed": true,
+      "state_preserved": true,
+      "event_id": null,
+      "note": "Isolated temporary DB. State, audit, and replay roll back; a retry after recovery must succeed.",
+      "result": {
+        "verdict": "SERVICE_ERROR",
+        "reason_code": "SERVICE_ERROR",
+        "explanation": "No execution committed. Database or validator service failed.",
+        "checks": [
+          {
+            "stage": "structure",
+            "label": "Message structure",
+            "status": "PASS",
+            "explanation": "Strict JSON, exact envelope, types, and size verified."
+          },
+          {
+            "stage": "identity",
+            "label": "Sender identity",
+            "status": "PASS",
+            "explanation": "Key registry matches the claimed sender; authentication follows."
+          },
+          {
+            "stage": "authentication",
+            "label": "HMAC authentication",
+            "status": "PASS",
+            "explanation": "HMAC-SHA256 verified using constant-time comparison."
+          },
+          {
+            "stage": "payload",
+            "label": "Payload & target",
+            "status": "PASS",
+            "explanation": "Target, action, exact payload fields, and simulator bounds verified."
+          },
+          {
+            "stage": "time",
+            "label": "Timestamp validity",
+            "status": "PASS",
+            "explanation": "Message is within its lifetime and the permitted clock skew."
+          },
+          {
+            "stage": "permissions",
+            "label": "Sender permissions",
+            "status": "PASS",
+            "explanation": "operator-01 is authorised for SET_MODE under kavach-policy/1.0."
+          },
+          {
+            "stage": "replay",
+            "label": "Replay protection",
+            "status": "PASS",
+            "explanation": "Message ID is new and sequence strictly increases in this stream."
+          },
+          {
+            "stage": "commit",
+            "label": "State commit",
+            "status": "FAIL",
+            "explanation": "Service failure. Transaction rolled back; no execution committed and no persistence claimed."
+          }
+        ],
+        "sender_verified": true,
+        "state_changed": false,
+        "policy_version": "kavach-policy/1.0",
+        "session_id": "KVC-BED97D2B",
+        "protected_state_before": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "protected_state_after": {
+          "mode": "NORMAL",
+          "report_interval_s": 10
+        },
+        "audit_persisted": false,
+        "replay_state_advanced": false,
+        "replay_sequence_before": 0,
+        "replay_sequence_after": 0,
+        "message": {
+          "version": 1,
+          "message_id": "1a7b9448-80c7-4ec1-9164-0ce39b5312d2",
+          "message_type": "COMMAND",
+          "sender_id": "operator-01",
+          "target_id": "KAVACH-SAT-01",
+          "key_id": "operator-key-01",
+          "sequence": 1,
+          "issued_at": 1792137600,
+          "expires_at": 1792137660,
+          "action": "SET_MODE",
+          "auth_tag": "3b1815f8ad138a4c2f6aa1521804e72e3aa427b76ae5bc9819c78ecc054402ba",
+          "payload": {
+            "mode": "SAFE"
+          }
+        }
+      }
+    }
+  ],
+  "isolated": true,
+  "environment": {
+    "python": "3.13.16",
+    "sqlite": "3.46.1",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.41"
+  },
+  "presenter_runtime_untouched": true
+}

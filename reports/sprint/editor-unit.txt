@@ -1,0 +1,74 @@
+
+> kavach@1.0.1 test:editor
+> node scripts/test-editor.mjs
+
+TAP version 13
+# Subtest: duplicate envelope
+ok 1 - duplicate envelope
+  ---
+  duration_ms: 2.415954
+  ...
+# Subtest: duplicate nested payload
+ok 2 - duplicate nested payload
+  ---
+  duration_ms: 0.194945
+  ...
+# Subtest: duplicate escaped spelling
+ok 3 - duplicate escaped spelling
+  ---
+  duration_ms: 0.101695
+  ...
+# Subtest: duplicate within array
+ok 4 - duplicate within array
+  ---
+  duration_ms: 0.108863
+  ...
+# Subtest: malformed input is unchanged {not-json}
+ok 5 - malformed input is unchanged {not-json}
+  ---
+  duration_ms: 0.150086
+  ...
+# Subtest: malformed input is unchanged {"payload":
+ok 6 - malformed input is unchanged {"payload":
+  ---
+  duration_ms: 0.081723
+  ...
+# Subtest: malformed input is unchanged 
+ok 7 - malformed input is unchanged 
+  ---
+  duration_ms: 0.085623
+  ...
+# Subtest: malformed input is unchanged {"x":"unterminated}
+ok 8 - malformed input is unchanged {"x":"unterminated}
+  ---
+  duration_ms: 0.136728
+  ...
+# Subtest: malformed input is unchanged {"x":NaN}
+ok 9 - malformed input is unchanged {"x":NaN}
+  ---
+  duration_ms: 0.16056
+  ...
+# Subtest: format changes whitespace only, never value tokens or signature
+ok 10 - format changes whitespace only, never value tokens or signature
+  ---
+  duration_ms: 0.961041
+  ...
+# Subtest: same key in different objects is allowed
+ok 11 - same key in different objects is allowed
+  ---
+  duration_ms: 0.166439
+  ...
+# Subtest: oversized attack input is never reformatted
+ok 12 - oversized attack input is never reformatted
+  ---
+  duration_ms: 0.13582
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16.95929

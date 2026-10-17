@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-16T09:38:59Z",
+  "ports_rendered": [
+    8000,
+    5173
+  ],
+  "proxied_status_command": "ACCEPTED",
+  "protected_state_changed": false,
+  "local_sandboxed_iframe_rendered": true,
+  "javascript_errors": [],
+  "note": "Local iframe test disables Chromium LocalNetworkAccessChecks for localhost cross-port requests. Public preview ingress is authenticated by Arena; the user browser path is not verified by this local test."
+}

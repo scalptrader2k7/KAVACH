@@ -1,0 +1,8 @@
+{
+  "database_and_key_bytes_unchanged": true,
+  "canonical_function_ast_unchanged": true,
+  "runtime_directory_mode": "0o700",
+  "key_file_mode": "0o600",
+  "database_mode": "0o600",
+  "note": "Only POSIX permission metadata repaired on preserved original runtime; QA uses other data directories."
+}

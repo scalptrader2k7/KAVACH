@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "archive": "Kavach-hardened-release.zip",
+  "sha256": "e49ae51fd312dd27ea98ad4da81f3f87e5db2b04674c626503631a562be758ab",
+  "bytes": 3798549,
+  "members": 89,
+  "source_files_verified": 88,
+  "independent_of_release_builder": true,
+  "checks": [
+    "exact member list",
+    "no duplicate/traversal/forbidden/runtime/credential paths",
+    "regular files; deterministic timestamps and modes",
+    "CRC integrity",
+    "every per-member manifest hash and byte count",
+    "every member equals sealed source bytes",
+    "no known signing value in raw/hex/base64 from 3 environments",
+    "no private-key marker"
+  ],
+  "original_runtime_bytes_unchanged": true
+}

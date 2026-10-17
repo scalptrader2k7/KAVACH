@@ -1,0 +1,92 @@
+{
+  "executed_at": "2026-10-16T12:53:18Z",
+  "browser": "Playwright Chromium",
+  "viewports": [
+    "1440x900",
+    "390x844"
+  ],
+  "checks": [
+    {
+      "name": "API connection and initial signed fixture",
+      "passed": true
+    },
+    {
+      "name": "Desktop layout has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "Browser submitted message: OK",
+      "passed": true
+    },
+    {
+      "name": "Browser submitted message: AUTH_FAILED",
+      "passed": true
+    },
+    {
+      "name": "Tampered browser input leaves protected state unchanged",
+      "passed": true
+    },
+    {
+      "name": "Browser submitted message: REPLAY",
+      "passed": true
+    },
+    {
+      "name": "Replay used original accepted bytes",
+      "passed": true
+    },
+    {
+      "name": "Evidence modal shows committed before and after snapshots",
+      "passed": true
+    },
+    {
+      "name": "Browser submitted message: INVALID_JSON",
+      "passed": true
+    },
+    {
+      "name": "Scenario Lab runs all 29 real checks",
+      "passed": true
+    },
+    {
+      "name": "Audit verdict filtering",
+      "passed": true
+    },
+    {
+      "name": "Downloaded evidence contains decisions and scenario results",
+      "passed": true
+    },
+    {
+      "name": "Mobile layout has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "Browser submitted message: OK",
+      "passed": true
+    },
+    {
+      "name": "Mobile telemetry remains separate from spacecraft state",
+      "passed": true
+    },
+    {
+      "name": "No JavaScript runtime errors",
+      "passed": true
+    }
+  ],
+  "passed": 16,
+  "total": 16,
+  "javascript_errors": [],
+  "backend_validation_ms": [
+    13.39,
+    1.26,
+    3.08,
+    2.67,
+    9.6
+  ],
+  "click_to_visible_verdict_ms": [
+    127.8,
+    130.68,
+    139.63,
+    420.56,
+    150.41
+  ],
+  "note": "Browser tests use real HTTP API and synthetic messages, without mocked validation."
+}

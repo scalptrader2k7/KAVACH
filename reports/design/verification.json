@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Authenticated but unauthorised receiver result rendered separately",
+    "Console, scenarios and audit reflow at 1440px",
+    "Console, scenarios and audit reflow at 1024px",
+    "Console, scenarios and audit reflow at 768px",
+    "Console, scenarios and audit reflow at 390px",
+    "Console, scenarios and audit reflow at 320px",
+    "Modal focus entry, containment, Escape and restoration",
+    "Visible editor focus indicator"
+  ],
+  "passed": 8
+}

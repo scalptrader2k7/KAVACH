@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "baseline": "Pre-sprint 55-file manifest; unchanged baseline files omitted.",
+  "scope": "All retained source/docs/tests/evidence deltas. Excludes dependencies/build/cache, raw per-run browser videos and private runtime; original runtime bytes unchanged, only permissions repaired. Final sidecars are listed but excluded from ZIP.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "modified",
+      "reason": "Exclude private runtime, environment, cache, dependency, generated and archive material from source tracking.",
+      "baseline_sha256": "2eabc4805933294b880c93caf3ad0b621c545bc85c6be169670c50910be99f8c"
+    },
+    {
+      "path": "README.md",
+      "status": "modified",
+      "reason": "Safe startup, honest scope, verified test/release commands, recovery, fallback and demonstration guidance.",
+      "baseline_sha256": "7419c9fa60170270ef20a99e416a91c3fddd6658cc6a4c3667904060cb7e61b7"
+    },
+    {
+      "path": "backend/__main__.py",
+      "status": "added",
+      "reason": "Supported loopback-default launcher with deliberate external-bind acknowledgement and privileged-issuer warning."
+    },
+    {
+      "path": "backend/app.py",
+      "status": "modified",
+      "reason": "Lazy runtime, bounded strict fixture/body/session/storage errors, guarded host/origin boundary, original-byte read-only replay.",
+      "baseline_sha256": "1ee8a0772250ed147b159ef306238458d7ec83db3034b1d90ff757078238d055"
+    },
+    {
+      "path": "backend/engine.py",
+      "status": "modified",
+      "reason": "Preserved pipeline/canonicalization/atomic effects; private permissions, safe database failures/closing, transactional proof facts and snapshot export.",
+      "baseline_sha256": "92a07bb1b307ced664681db5c7601eb24931b68d4409bd657c7d2af0ee6ce15c"
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "status": "added",
+      "reason": "Complete human-readable per-file delta and reason register."
+    },
+    {
+      "path": "docs/CONTRACT.md",
+      "status": "modified",
+      "reason": "Preserved engine contract plus exact transport, bounded error, replay and factual receipt clarifications.",
+      "baseline_sha256": "d1975abd64b785e0617674f9e2fc4b502c0e496a5baca2af5d011418b848a389"
+    },
+    {
+      "path": "docs/DEMO.md",
+      "status": "modified",
+      "reason": "Existing script plus compact six-step two-minute target and no-hidden-replay/honest evidence guidance.",
+      "baseline_sha256": "ec52ae2075105eb110dbb1c39a23ab5efa080a42805d2a66ac7145e788cb9020"
+    },
+    {
+      "path": "docs/HARDENING_REPORT.md",
+      "status": "added",
+      "reason": "Before/after findings, actual commands/results, invariant preservation, deliverables and explicit limitations."
+    },
+    {
+      "path": "docs/SECURITY.md",
+      "status": "added",
+      "reason": "Local trust boundary, exposure recovery preserving evidence, private runtime and safe release/public-demo design."
+    },
+    {
+      "path": "package-lock.json",
+      "status": "modified",
+      "reason": "Matching reproducible dependency lock for package/version/Vite maintenance; no new runtime framework.",
+      "baseline_sha256": "3af1da0c579600f6312eb9b1bd63a51fe93d1689206b372c8c20a4f786c36a0b"
+    },
+    {
+      "path": "package.json",
+      "status": "modified",
+      "reason": "Version 1.0.1, safe dev/preview/build/editor/release commands and compatible Vite security maintenance.",
+      "baseline_sha256": "81a836c8aeef49ce0090f0a10299c645cb57547e84857664b39b41b3754b158d"
+    },
+    {
+      "path": "preview/Kavach-interactive-prototype.html",
+      "status": "added",
+      "reason": "Regenerated self-contained current browser-only demonstration; no server key or network dependency."
+    },
+    {
+      "path": "preview/README.md",
+      "status": "modified",
+      "reason": "Separate browser-only scope/startup/tests and no SQLite/server-security claims.",
+      "baseline_sha256": "96cb1ce63d90d42f1949e61420a58fa8a4cab8db913414ea6d6b0306ea14d196"
+    },
+    {
+      "path": "preview/build_preview.py",
+      "status": "modified",
+      "reason": "Import-safe standalone generator using current UI; no import-time builds.",
+      "baseline_sha256": "990524f4f51ad812a3ef531176d63e35da5883ae586abd9d54d9315bbc7eab95"
+    },
+    {
+      "path": "preview/offline-adapter.js",
+      "status": "modified",
+      "reason": "Truthful independent JavaScript/in-memory validator, original-byte replay and non-persistent proof metadata.",
+      "baseline_sha256": "596d781371f89a65145528a1ade0699826f65d945e4821b9f044fd256221da06"
+    },
+    {
+      "path": "preview/offline-main.tsx",
+      "status": "modified",
+      "reason": "Generated browser-only adapter wiring from current UI; excluded from sanitized release.",
+      "baseline_sha256": "ae5b602ff3b5dbf6b8cdd84982ea4ff6fd33b81d78ab97f7a070f0d01daa88a4"
+    },
+    {
+      "path": "preview/test_offline.py",
+      "status": "modified",
+      "reason": "Import-safe explicit optional Chromium test; BLOCKED exit 2 without dependency/binary and eight real browser-only assertions.",
+      "baseline_sha256": "121990604f6cc1a4d2052bb80a1c77a0be713f1316a5cea6f9affd33948802cc"
+    },
+    {
+      "path": "release-files.json",
+      "status": "added",
+      "reason": "Exact reviewed source/docs/assets/evidence allowlist; builder independently rejects dangerous additions."
+    },
+    {
+      "path": "reports/accepted-decision.png",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "1e26fe6f49504192c2425ba56dcdb75446aa85fd77e8189251ddcbbbc62e2731"
+    },
+    {
+      "path": "reports/audit-evidence.png",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "e67d9e00f42c05073deb74ac26e8e3a618aa75258b643ff4042482c8b0e0fca5"
+    },
+    {
+      "path": "reports/browser-results.json",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "90ccb34f7cba7ddc31850a3b22f90d8187288daf080b6debb649d82926ee997b"
+    },
+    {
+      "path": "reports/browser-session-evidence.json",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "e45d13c5d2546500e1766b6a179c9bcfa95c0f421df25db70d7a52804571d1a7"
+    },
+    {
+      "path": "reports/console-desktop.png",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "5cd63940a507b02ac6543a88a7534944d2223bf3dacb26b1262d8f432c4d9e31"
+    },
+    {
+      "path": "reports/console-mobile.png",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "05eb72bf40a83734e0de0d32574902c4feeeab75a36ddfc4d34111f17b0d7d37"
+    },
+    {
+      "path": "reports/kavach-walkthrough.webm",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "447f5f5a57e61254697221f162e4912849fce0e37fef22a12ec016f390510d4f"
+    },
+    {
+      "path": "reports/offline-prototype-desktop.png",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "9b3ee2a253985710bbb82a4396534a0f21d14fbf05b572c65ac666a64755edbd"
+    },
+    {
+      "path": "reports/offline-prototype-tests.json",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "64cb463cdb8feae8395fcb99d100c7c7ab5b462a948d9d1d8b3acd94bb09341e"
+    },
+    {
+      "path": "reports/scenario-lab.png",
+      "status": "modified",
+      "reason": "Refreshed actual browser/build/offline screenshot, video or machine-readable verification evidence; no server signing keys.",
+      "baseline_sha256": "f17552702dee3f7c8099b092fb0a4507c629e4161319f65413766e8e65882043"
+    },
+    {
+      "path": "reports/sprint/BASELINE_AUDIT.md",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/archive-independent.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/baseline-browser-run.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/baseline-browser.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/baseline-build.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/baseline-core.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/baseline-discovery.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/baseline-scenarios.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/bindings.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-hardening.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-hardening.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-install.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-original16.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-production.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-vite.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/browser-vite.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/build.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/candidate-release-validation.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/changed-files.json",
+      "status": "added",
+      "reason": "Machine-readable complete source/docs/tests/evidence delta and per-file reason register."
+    },
+    {
+      "path": "reports/sprint/clean-build.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/clean-extraction.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/clean-npm-ci.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/clean-optional-browser.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/clean-pytest.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/discovery-after-guard.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/editor-unit.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/engine-after.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-clean-build.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-clean-extraction.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-clean-npm-ci.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-clean-pytest.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-original56.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-pytest.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/final-release-validation.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/full-pytest.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/full-pytest.xml",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/interim-pytest.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/mission-mobile.png",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/mission-proof.png",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/npm-audit-final.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/offline-browser.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/offline-build.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/optional-browser-missing.txt",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/reproducibility.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/runtime-integrity-before.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/runtime-preservation.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "reports/sprint/runtime-scenarios.json",
+      "status": "added",
+      "reason": "Actual sprint verification/baseline evidence or final hash-bearing validation sidecar; historical/interim failures remain labeled and are not final passes."
+    },
+    {
+      "path": "run.sh",
+      "status": "modified",
+      "reason": "Build and launch existing backend through its safe supported entry point.",
+      "baseline_sha256": "96888e813b377cf126e877af4fbec875ed040b0b68d615214630203f91e821c5"
+    },
+    {
+      "path": "scripts/release.py",
+      "status": "added",
+      "reason": "Deterministic exact-allowlist packager, bounded ZIP inspection, source/dist secret scanning and fail-closed checks."
+    },
+    {
+      "path": "scripts/run_scenarios.py",
+      "status": "added",
+      "reason": "Explicit isolated real 29-case receiver runner; no original runtime mutation."
+    },
+    {
+      "path": "scripts/test-editor.mjs",
+      "status": "added",
+      "reason": "Twelve actual TypeScript editor tests including duplicate/malformed/large-number preservation."
+    },
+    {
+      "path": "tests/browser_hardening.py",
+      "status": "added",
+      "reason": "Explicit optional 30-assertion actual browser/API editor, decision, replay, policy, telemetry, session, keyboard and mobile regression command."
+    },
+    {
+      "path": "tests/browser_smoke.py",
+      "status": "modified",
+      "reason": "Preserve original 16 real assertions; guard optional browser execution and fail honestly on missing dependency/browser.",
+      "baseline_sha256": "7575d70728ad08300b7c35e75e135491a1b9a2ecc629603d3c9993cb15ec371e"
+    },
+    {
+      "path": "tests/test_api.py",
+      "status": "modified",
+      "reason": "Supporting existing project source updated for the documented incremental hardening; inspect file diff against baseline.",
+      "baseline_sha256": "70abdd936e67a112f50ac41df8a8dc1a924c5d7bd42deea1465e9fefd2ecb25c"
+    },
+    {
+      "path": "tests/test_hardening.py",
+      "status": "added",
+      "reason": "Core regressions for permissions/import isolation/errors/body limits/session/replay/locking/restart/storage corruption."
+    },
+    {
+      "path": "tests/test_release.py",
+      "status": "added",
+      "reason": "Injected forbidden-file/secret/symlink/path/hash/determinism regressions plus actual submission archive gate; constructs private-header test input at runtime."
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "modified",
+      "reason": "Loopback/exact-host default, relative API proxy, explicit acknowledged external exception.",
+      "baseline_sha256": "34f17274ece6f559134c1d95fb4799af701f5c185feefcdcb0454d3849e1d862"
+    },
+    {
+      "path": "web/src/api.ts",
+      "status": "added",
+      "reason": "Typed relative API transport; current raw UTF-8 message body is never reparsed or silently re-signed."
+    },
+    {
+      "path": "web/src/components/AttackProofSummary.tsx",
+      "status": "added",
+      "reason": "Compact factual attempt/auth/first-failure/before-after/replay/persisted-audit receipt."
+    },
+    {
+      "path": "web/src/components/AuditTable.tsx",
+      "status": "added",
+      "reason": "Typed existing audit rendering and decision inspection."
+    },
+    {
+      "path": "web/src/components/ValidationPipeline.tsx",
+      "status": "added",
+      "reason": "Typed existing eight-stage/first-failure trace rendering."
+    },
+    {
+      "path": "web/src/components/ui.tsx",
+      "status": "added",
+      "reason": "Small shared presentation components extracted from the existing entry point."
+    },
+    {
+      "path": "web/src/editor.ts",
+      "status": "added",
+      "reason": "Lossless token-preserving JSON formatter with malformed/duplicate-key warnings."
+    },
+    {
+      "path": "web/src/main.tsx",
+      "status": "modified",
+      "reason": "Verbatim editor transport, receiver-authored receipt/shortcuts, explicit new-session closure, fixture/form and editor-scroll synchronization.",
+      "baseline_sha256": "07ae07e681f33768677e74ec4d0b521a5bf3c54c7d53fe4ce577f1dd295405a2"
+    },
+    {
+      "path": "web/src/styles.css",
+      "status": "modified",
+      "reason": "Existing visual identity retained; responsive proof receipt, shortcuts and keyboard-accessible details.",
+      "baseline_sha256": "878f019b1532d45a0738e33bf35760151beb4705d017c2b35c9a1aa566c13515"
+    },
+    {
+      "path": "web/src/types.ts",
+      "status": "added",
+      "reason": "Shared explicit API, state, decision, audit and scenario types."
+    }
+  ],
+  "external_deliverables": [
+    {
+      "path": "/home/user/Kavach-hardened-release.zip",
+      "status": "added",
+      "reason": "Sanitized deterministic submission; only distribute after final gates pass."
+    },
+    {
+      "path": "/home/user/Kavach-interactive-prototype.html",
+      "status": "modified",
+      "reason": "Refreshed downloadable copy of current self-contained browser-only fallback."
+    }
+  ]
+}

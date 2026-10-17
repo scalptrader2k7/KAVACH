@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "members": 78,
+  "known_secret_sources_checked": 1,
+  "sha256": "e46dd094faca48674dae5dedf2efbf2536767ecf55eb02372a5031c55aee8549",
+  "note": "Exact allowlist, forbidden names, symlinks, hashes, private-key markers, and known secret byte/hex/base64 values checked. Not a universal secret detector."
+}

@@ -1,0 +1,13 @@
+
+> kavach@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v6.4.4 building for production...
+transforming...
+✓ 1933 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/index.html                   0.78 kB │ gzip:  0.52 kB
+../dist/assets/index-DZdKmlJo.css   54.21 kB │ gzip: 12.13 kB
+../dist/assets/index-OcXbq4th.js   289.35 kB │ gzip: 86.77 kB
+✓ built in 2.47s

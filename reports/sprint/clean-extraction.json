@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "environment": "Fresh venv from candidate archive; no Playwright installed; unavailable Chromium path",
+  "core_pytest": "111 passed, 1 upstream warning; zero skips",
+  "npm_ci": "PASS",
+  "typescript_production_build": "PASS",
+  "supported_backend_startup": "127.0.0.1:8001",
+  "actual_http_checks": {
+    "health_ready": true,
+    "production_ui": true,
+    "signed_valid_command": "OK; persisted audit; replay advanced",
+    "original_bytes_replay": "REPLAY; state unchanged",
+    "payload_tamper": "AUTH_FAILED; state unchanged",
+    "export": 200
+  },
+  "optional_browser_without_dependency": "BLOCKED exit 2, not a browser pass",
+  "qualification": "Executed against candidate archive. Final archive is independently path/hash/secret/CRC inspected and source-verified afterward; final-core log is a separate sidecar."
+}
