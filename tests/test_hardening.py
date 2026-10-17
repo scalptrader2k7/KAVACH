@@ -206,3 +206,65 @@ def test_corrupt_audit_record_is_service_error_not_secret_or_stacktrace(client,r
     r=client.get('/api/audit')
     assert r.status_code==503 and r.json()['verdict']=='SERVICE_ERROR'
     assert 'CORRUPT_PRIVATE_STORAGE_VALUE' not in r.text and 'Traceback' not in r.text
+
+
+def test_qa04_export_snapshot_consistency_under_intervening_commit(tmp_path):
+    """QA-04 regression: intervening commits must not cause snapshot drift between exported events and audit_chain."""
+    engine = Engine(tmp_path / 'export_consistency')
+    sid = engine.active_session()
+
+    # Run an initial export while intercepting connect or verifying that export uses single snapshot
+    original_connect = engine.connect
+    connection_count = 0
+
+    def counted_connect():
+        nonlocal connection_count
+        connection_count += 1
+        return original_connect()
+
+    engine.connect = counted_connect
+    evidence = engine.export(session=sid)
+    # Inside export(), exactly 1 connection is opened for the entire export transaction
+    assert connection_count == 1
+    assert len(evidence['events']) == 0
+    assert evidence['audit_chain']['links_checked'] == 0
+    assert evidence['audit_chain']['status'] == 'VERIFIED'
+    assert evidence['audit_chain']['problems'] == []
+
+    # Now add an event and verify export reflects consistent count
+    engine.connect = original_connect
+    msg = engine.issue(payload={'mode': 'SAFE'}, now=1792137600)
+    engine.validate(json.dumps(msg).encode(), now=1792137600)
+
+    evidence2 = engine.export(session=sid)
+    assert len(evidence2['events']) == 1
+    assert evidence2['audit_chain']['links_checked'] == 1
+    assert evidence2['audit_chain']['status'] == 'VERIFIED'
+    assert evidence2['audit_chain']['problems'] == []
+
+
+def test_qa04_verify_audit_chain_connection_isolation_and_tampering(tmp_path):
+    """QA-04: verify_audit_chain accepts optional db connection and correctly detects tampering."""
+    engine = Engine(tmp_path / 'chain_tamper')
+    sid = engine.active_session()
+    msg = engine.issue(payload={'mode': 'SAFE'}, now=1792137600)
+    engine.validate(json.dumps(msg).encode(), now=1792137600)
+
+    # 1. verify standalone call with db=None
+    res_none = engine.verify_audit_chain(session=sid)
+    assert res_none['status'] == 'VERIFIED'
+    assert res_none['links_checked'] == 1
+
+    # 2. verify call with explicit db connection
+    with engine.connect() as db:
+        res_db = engine.verify_audit_chain(session=sid, db=db)
+        assert res_db['status'] == 'VERIFIED'
+        assert res_db['links_checked'] == 1
+
+    # 3. verify tampering is still caught when exported
+    with engine.connect() as db:
+        db.execute("UPDATE audit_chain SET record_hash='tampered_hash' WHERE seq=1")
+
+    exported = engine.export(session=sid)
+    assert exported['audit_chain']['status'] == 'FAILED'
+    assert any(p.get('kind') in ('RECORD_MODIFIED', 'BROKEN_LINK', 'HASH_MISMATCH') for p in exported['audit_chain']['problems'])

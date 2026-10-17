@@ -1,76 +1,613 @@
-import React from 'react';
-import {Activity,ShieldCheck,ShieldX,RotateCcw,Fingerprint,LockKeyhole,FlaskConical,AlertTriangle,BarChart3} from 'lucide-react';
-import type {Metrics,AnomalyReport} from '../types';
-import {Badge} from './ui';
+import React, { useState, useMemo, useCallback } from 'react';
+import {
+  Activity,
+  ShieldCheck,
+  ShieldX,
+  RotateCcw,
+  Fingerprint,
+  LockKeyhole,
+  FlaskConical,
+  AlertTriangle,
+  BarChart3,
+  RefreshCw,
+  Download,
+  CheckCircle2,
+  XCircle,
+  ExternalLink,
+  ChevronDown,
+  ChevronRight,
+  Layers,
+  Info,
+  Clock,
+  Radio,
+  Satellite,
+  CheckCheck,
+} from 'lucide-react';
+import type { Metrics, AnomalyReport } from '../types';
+import { Badge, fmtTime } from './ui';
+import '../metrics.css';
 
-const STAGE_LABELS:Record<string,string>={
- structure:'Structure',identity:'Identity',authentication:'Authentication',payload:'Payload',
- time:'Freshness',permissions:'Authorization',replay:'Replay',commit:'Commit'};
+export type Page = 'console' | 'scenarios' | 'demo' | 'timeline' | 'compare' | 'metrics' | 'policy' | 'audit';
 
-/** Security Metrics Dashboard (roadmap feature 13).
- * Every number is fetched from GET /api/metrics, which computes it from persisted
- * audit records. Nothing on this screen is hardcoded, and live-session counters are
- * kept structurally separate from isolated scenario-suite counters.
- */
-export function MetricsDashboard({metrics,anomalies,loading}:{metrics:Metrics|null;anomalies:AnomalyReport|null;loading:boolean}){
- if(loading&&!metrics)return <section className="panel metrics-panel"><div className="panel-heading"><div className="panel-title"><BarChart3 size={17}/><h2>Security metrics</h2></div></div><div className="metrics-empty"><Activity size={22} strokeWidth={1}/><p>Loading metrics from persisted records…</p></div></section>;
- if(!metrics)return <section className="panel metrics-panel"><div className="panel-heading"><div className="panel-title"><BarChart3 size={17}/><h2>Security metrics</h2></div></div><div className="metrics-empty"><AlertTriangle size={22} strokeWidth={1}/><p>Metrics are unavailable. The local API may be offline.</p></div></section>;
- const live=metrics.live,suite=metrics.scenario_suites;
- const maxReason=Math.max(1,...Object.values(live.reason_code_breakdown));
- const maxStage=Math.max(1,...Object.values(live.first_failed_stages));
- return <section className="panel metrics-panel" aria-label="Security metrics">
-  <div className="panel-heading"><div className="panel-title"><BarChart3 size={17}/><h2>Security metrics</h2></div><span className="workstation-label">{metrics.scope}</span></div>
-  <p className="metrics-note">Computed from persisted audit records in session <code>{metrics.session_id}</code>. No value on this screen is hardcoded.</p>
-  <div className="metric-cards">
-   <MetricCard icon={<Activity size={15}/>} label="Messages checked" value={live.messages_checked}/>
-   <MetricCard icon={<ShieldCheck size={15}/>} label="Accepted" value={live.accepted} tone="green"/>
-   <MetricCard icon={<ShieldX size={15}/>} label="Rejected" value={live.rejected} tone="red"/>
-   <MetricCard icon={<RotateCcw size={15}/>} label="Replay attempts" value={live.replay_attempts_detected} tone="amber"/>
-   <MetricCard icon={<Fingerprint size={15}/>} label="Auth failures" value={live.authentication_failures} tone="red"/>
-   <MetricCard icon={<LockKeyhole size={15}/>} label="Authorization denials" value={live.authorisation_denials} tone="red"/>
-  </div>
-  <div className="metrics-columns">
-   <div className="metric-block">
-    <h3>Rejection reasons</h3>
-    {Object.keys(live.rejection_reasons).length
-     ?Object.entries(live.rejection_reasons).sort((a,b)=>b[1]-a[1]).map(([reason,count])=><div key={reason} className="bar-row"><span className="bar-label mono">{reason}</span><span className="bar-track"><span className="bar-fill red" style={{width:(count/maxReason*100)+'%'}}/></span><span className="bar-value">{count}</span></div>)
-     :<p className="metric-none">No rejections recorded in this session yet.</p>}
-   </div>
-   <div className="metric-block">
-    <h3>First failed validation stage</h3>
-    {Object.keys(live.first_failed_stages).length
-     ?Object.entries(live.first_failed_stages).sort((a,b)=>b[1]-a[1]).map(([stage,count])=><div key={stage} className="bar-row"><span className="bar-label">{STAGE_LABELS[stage]??stage}</span><span className="bar-track"><span className="bar-fill amber" style={{width:(count/maxStage*100)+'%'}}/></span><span className="bar-value">{count}</span></div>)
-     :<p className="metric-none">No stage has failed in this session yet.</p>}
-   </div>
-  </div>
-  <div className="metrics-columns">
-   <div className="metric-block">
-    <h3>Reason-code breakdown</h3>
-    <div className="code-grid">{Object.entries(live.reason_code_breakdown).sort((a,b)=>b[1]-a[1]).map(([code,count])=><div key={code} className={code==='OK'?'ok':''}><code>{code}</code><span>{count}</span></div>)}</div>
-    {live.acceptance_rate!=null&&<p className="metric-rate">Acceptance rate <strong>{(live.acceptance_rate*100).toFixed(1)}%</strong></p>}
-   </div>
-   <div className="metric-block">
-    <h3><FlaskConical size={13}/> Isolated scenario suites</h3>
-    <p className="metric-note">Runs in an isolated session with an injected clock. Never mixed into the live counters above.</p>
-    <div className="metric-cards compact">
-     <MetricCard label="Suite runs" value={suite.runs}/>
-     <MetricCard label="Cases executed" value={suite.cases_executed}/>
-     <MetricCard label="Cases passed" value={suite.cases_passed} tone="green"/>
-     <MetricCard label="Cases failed" value={suite.cases_failed} tone={suite.cases_failed?'red':'green'}/>
-    </div>
-    <div className="integrity-flag"><span>Protected-state integrity violations reported by tests</span><Badge tone={suite.protected_state_integrity_violations?'red':'green'}>{suite.protected_state_integrity_violations}</Badge></div>
-   </div>
-  </div>
-  {anomalies&&<div className="metric-block anomaly-block">
-   <h3><AlertTriangle size={13}/> Synthetic telemetry anomalies</h3>
-   <p className="metric-note">{anomalies.disclaimer}</p>
-   {anomalies.finding_count
-    ?<div className="anomaly-list">{anomalies.findings.map((f,i)=><div key={i} className="anomaly-row"><Badge tone="amber">{f.rule}</Badge><span>{f.detail}</span><code>{f.event_id?f.event_id.slice(0,8)+'…':'—'}</code></div>)}</div>
-    :<p className="metric-none">No anomaly rules fired on the accepted telemetry in this session.</p>}
-  </div>}
- </section>;
+export interface MetricsDashboardProps {
+  metrics: Metrics | null;
+  anomalies: AnomalyReport | null;
+  loading: boolean;
+  onRefresh?: () => Promise<void> | void;
+  onNavigate?: (page: Page) => void;
 }
 
-function MetricCard({icon,label,value,tone='neutral'}:{icon?:React.ReactNode;label:string;value:number;tone?:string}){
- return <div className={'metric-card '+tone}>{icon&&<span className="metric-icon">{icon}</span>}<span className="metric-label">{label}</span><strong className="metric-value">{value}</strong></div>;
+const STAGE_LABELS: Record<string, string> = {
+  structure: '1. Structure & Envelope',
+  identity: '2. Identity & Key Registry',
+  authentication: '3. HMAC Authentication',
+  payload: '4. Action & Payload Schema',
+  time: '5. Lifetime & Freshness',
+  permissions: '6. Role Authorization',
+  replay: '7. Replay Stream Window',
+  commit: '8. State Transition Commit',
+};
+
+export function MetricsDashboard({
+  metrics,
+  anomalies,
+  loading,
+  onRefresh,
+  onNavigate,
+}: MetricsDashboardProps) {
+  const [showRules, setShowRules] = useState<boolean>(false);
+  const [lastUpdated, setLastUpdated] = useState<string>(() => new Date().toLocaleTimeString());
+
+  const handleRefresh = useCallback(async () => {
+    if (onRefresh) {
+      await onRefresh();
+      setLastUpdated(new Date().toLocaleTimeString());
+    }
+  }, [onRefresh]);
+
+  const handleExport = useCallback(() => {
+    if (!metrics) return;
+    const payload = {
+      label: 'KAVACH Operations & Security Metrics — Local Simulation',
+      exported_at: new Date().toISOString(),
+      scope: metrics.scope,
+      session_id: metrics.session_id,
+      live_metrics: metrics.live,
+      scenario_suites: metrics.scenario_suites,
+      anomalies: anomalies
+        ? {
+            finding_count: anomalies.finding_count,
+            findings: anomalies.findings,
+            rules: anomalies.rules,
+            disclaimer: anomalies.disclaimer,
+          }
+        : null,
+    };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `kavach-metrics-${metrics.session_id}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, [metrics, anomalies]);
+
+  // Loading state
+  if (loading && !metrics) {
+    return (
+      <section className="metrics-workspace panel metrics-panel" aria-label="Security metrics">
+        <div className="metrics-loading-state">
+          <div className="metrics-state-icon">
+            <Activity size={24} className="spin" />
+          </div>
+          <h3>Retrieving Persisted Metrics…</h3>
+          <p>Compiling live verification counters and scenario benchmarks from local SQLite records.</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Error / Offline state
+  if (!metrics) {
+    return (
+      <section className="metrics-workspace panel metrics-panel" aria-label="Security metrics">
+        <div className="metrics-error-state">
+          <div className="metrics-state-icon error">
+            <AlertTriangle size={24} />
+          </div>
+          <h3>Metrics Unavailable</h3>
+          <p>Unable to retrieve operational metrics. The local Python backend service may be offline or initializing.</p>
+          {onRefresh && (
+            <button className="metrics-action-btn primary" onClick={handleRefresh}>
+              <RefreshCw size={13} />
+              Retry Connection
+            </button>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  const live = metrics.live;
+  const suite = metrics.scenario_suites;
+
+  // Relative max for bar charts
+  const maxReason = Math.max(1, ...Object.values(live.rejection_reasons));
+  const maxStage = Math.max(1, ...Object.values(live.first_failed_stages));
+
+  // Acceptance & Rejection calculations
+  const totalDecisions = live.messages_checked;
+  const acceptedRateStr =
+    live.acceptance_rate != null
+      ? (live.acceptance_rate * 100).toFixed(1) + '%'
+      : totalDecisions > 0
+      ? ((live.accepted / totalDecisions) * 100).toFixed(1) + '%'
+      : '0.0%';
+  const rejectionRateStr =
+    totalDecisions > 0 ? ((live.rejected / totalDecisions) * 100).toFixed(1) + '%' : '0.0%';
+
+  const acceptedPct = totalDecisions > 0 ? (live.accepted / totalDecisions) * 100 : 0;
+  const rejectedPct = totalDecisions > 0 ? (live.rejected / totalDecisions) * 100 : 0;
+  const errorPct = totalDecisions > 0 ? (live.service_errors / totalDecisions) * 100 : 0;
+
+  return (
+    <section className="metrics-workspace panel metrics-panel" aria-label="Security metrics">
+      {/* ==================== 1. HEADER PANEL ==================== */}
+      <div className="metrics-header-panel">
+        <div className="metrics-header-top">
+          <div className="metrics-header-left">
+            <div className="metrics-header-icon">
+              <BarChart3 size={22} />
+            </div>
+            <div>
+              <div className="metrics-title-row">
+                <h2>Operations & Security Metrics</h2>
+                <span className="metrics-scope-pill workstation-label">
+                  <span className="metrics-scope-dot" />
+                  {metrics.scope}
+                </span>
+                <Badge tone="neutral">Session: {metrics.session_id}</Badge>
+              </div>
+              <p className="metrics-header-desc">
+                Derived directly from persistent SQLite audit records. Live command counters are strictly decoupled from
+                isolated scenario-suite benchmarks.
+              </p>
+            </div>
+          </div>
+
+          <div className="metrics-header-actions">
+            <span className="metrics-last-updated">
+              <Clock size={11} />
+              Updated {lastUpdated}
+            </span>
+            {onRefresh && (
+              <button
+                className="metrics-action-btn"
+                onClick={handleRefresh}
+                disabled={loading}
+                title="Refresh metrics from backend"
+              >
+                <RefreshCw size={12} className={loading ? 'spin' : ''} />
+                Refresh
+              </button>
+            )}
+            <button className="metrics-action-btn" onClick={handleExport} title="Download metrics snapshot JSON">
+              <Download size={12} />
+              Export JSON
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== 2. EXECUTIVE KPI CARDS ==================== */}
+      <div className="metrics-kpi-grid metric-cards">
+        {/* Messages Checked */}
+        <div className="kpi-card blue metric-card">
+          <div className="kpi-top-row">
+            <span className="kpi-label metric-label">Evaluated</span>
+            <Activity size={16} className="kpi-icon" />
+          </div>
+          <div className="kpi-val-row">
+            <span className="kpi-value metric-value">{live.messages_checked}</span>
+          </div>
+          <span className="kpi-subtext">Total commands checked</span>
+        </div>
+
+        {/* Accepted */}
+        <div className="kpi-card green metric-card green">
+          <div className="kpi-top-row">
+            <span className="kpi-label metric-label">Accepted</span>
+            <ShieldCheck size={16} className="kpi-icon" />
+          </div>
+          <div className="kpi-val-row">
+            <span className="kpi-value metric-value">{live.accepted}</span>
+            <span className="kpi-rate-tag green">{acceptedRateStr}</span>
+          </div>
+          <span className="kpi-subtext">Passed 8/8 stages</span>
+        </div>
+
+        {/* Rejected */}
+        <div className="kpi-card red metric-card red">
+          <div className="kpi-top-row">
+            <span className="kpi-label metric-label">Rejected</span>
+            <ShieldX size={16} className="kpi-icon" />
+          </div>
+          <div className="kpi-val-row">
+            <span className="kpi-value metric-value">{live.rejected}</span>
+            <span className="kpi-rate-tag red">{rejectionRateStr}</span>
+          </div>
+          <span className="kpi-subtext">Halted before state commit</span>
+        </div>
+
+        {/* Replay Protection */}
+        <div className="kpi-card amber metric-card amber">
+          <div className="kpi-top-row">
+            <span className="kpi-label metric-label">Replay Events</span>
+            <RotateCcw size={16} className="kpi-icon" />
+          </div>
+          <div className="kpi-val-row">
+            <span className="kpi-value metric-value">{live.replay_attempts_detected}</span>
+            {live.out_of_order_rejected > 0 && (
+              <span className="kpi-rate-tag" title="Out of order sequence rejections">
+                +{live.out_of_order_rejected} order
+              </span>
+            )}
+          </div>
+          <span className="kpi-subtext">Stream window duplicates</span>
+        </div>
+
+        {/* Cryptographic Failures */}
+        <div className="kpi-card red metric-card red">
+          <div className="kpi-top-row">
+            <span className="kpi-label metric-label">Auth Failures</span>
+            <Fingerprint size={16} className="kpi-icon" />
+          </div>
+          <div className="kpi-val-row">
+            <span className="kpi-value metric-value">{live.authentication_failures}</span>
+          </div>
+          <span className="kpi-subtext">HMAC tag mismatches</span>
+        </div>
+
+        {/* Authorization Denials */}
+        <div className="kpi-card red metric-card red">
+          <div className="kpi-top-row">
+            <span className="kpi-label metric-label">Policy Denials</span>
+            <LockKeyhole size={16} className="kpi-icon" />
+          </div>
+          <div className="kpi-val-row">
+            <span className="kpi-value metric-value">{live.authorisation_denials}</span>
+          </div>
+          <span className="kpi-subtext">Role boundary violations</span>
+        </div>
+      </div>
+
+      {/* ==================== 3. OUTCOME PROPORTION METER ==================== */}
+      <div className="metrics-outcome-meter-panel">
+        <div className="outcome-meter-header">
+          <span className="outcome-meter-title">
+            <Layers size={13} />
+            Command Validation Outcome Distribution
+          </span>
+          <span>
+            {totalDecisions > 0
+              ? `${totalDecisions} total decision${totalDecisions === 1 ? '' : 's'} recorded`
+              : 'Awaiting first evaluation'}
+          </span>
+        </div>
+
+        <div className="outcome-meter-bar">
+          {totalDecisions > 0 ? (
+            <>
+              {acceptedPct > 0 && (
+                <div
+                  className="meter-seg accepted"
+                  style={{ width: `${acceptedPct}%` }}
+                  title={`Accepted: ${live.accepted} (${acceptedPct.toFixed(1)}%)`}
+                />
+              )}
+              {rejectedPct > 0 && (
+                <div
+                  className="meter-seg rejected"
+                  style={{ width: `${rejectedPct}%` }}
+                  title={`Rejected: ${live.rejected} (${rejectedPct.toFixed(1)}%)`}
+                />
+              )}
+              {errorPct > 0 && (
+                <div
+                  className="meter-seg error"
+                  style={{ width: `${errorPct}%` }}
+                  title={`Service Errors: ${live.service_errors} (${errorPct.toFixed(1)}%)`}
+                />
+              )}
+            </>
+          ) : (
+            <div className="meter-seg empty" title="No decisions evaluated yet in current session" />
+          )}
+        </div>
+
+        <div className="outcome-meter-legend">
+          <div className="meter-legend-item">
+            <span className="meter-dot accepted" />
+            <span>Accepted:</span>
+            <strong>{live.accepted}</strong>
+            <small>({acceptedRateStr})</small>
+          </div>
+          <div className="meter-legend-item">
+            <span className="meter-dot rejected" />
+            <span>Rejected:</span>
+            <strong>{live.rejected}</strong>
+            <small>({rejectionRateStr})</small>
+          </div>
+          <div className="meter-legend-item">
+            <span className="meter-dot error" />
+            <span>Service Errors:</span>
+            <strong>{live.service_errors}</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== 4. REJECTION & STAGE ANALYTICS GRID ==================== */}
+      <div className="metrics-analysis-grid metrics-columns">
+        {/* Rejection Reasons */}
+        <div className="analytics-card metric-block">
+          <div className="analytics-card-header">
+            <div className="analytics-header-title">
+              <ShieldX size={15} style={{ color: '#f2777b' }} />
+              <h3>Rejection Reasons</h3>
+            </div>
+            <Badge tone="red">{Object.keys(live.rejection_reasons).length} active codes</Badge>
+          </div>
+
+          <div className="analytics-card-body">
+            {Object.keys(live.rejection_reasons).length > 0 ? (
+              Object.entries(live.rejection_reasons)
+                .sort((a, b) => b[1] - a[1])
+                .map(([reason, count]) => {
+                  const pct = totalDecisions > 0 ? ((count / totalDecisions) * 100).toFixed(1) : '0';
+                  return (
+                    <div
+                      key={reason}
+                      className="analytics-bar-row bar-row clickable"
+                      onClick={() => onNavigate && onNavigate('timeline')}
+                      title={`Filter ${reason} in Attack Timeline`}
+                    >
+                      <span className="analytics-bar-label bar-label mono">{reason}</span>
+                      <div className="analytics-bar-track bar-track">
+                        <div
+                          className="analytics-bar-fill bar-fill red"
+                          style={{ width: `${(count / maxReason) * 100}%` }}
+                        />
+                      </div>
+                      <span className="analytics-bar-count bar-value">
+                        {count} <small>({pct}%)</small>
+                      </span>
+                    </div>
+                  );
+                })
+            ) : (
+              <div className="analytics-empty-message">
+                <ShieldCheck size={26} strokeWidth={1.5} style={{ color: '#5ec269' }} />
+                <p className="metric-none">No command rejections recorded in this session yet.</p>
+                <small>Submitted messages have satisfied all 8 verification stages.</small>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* First Failed Validation Stage */}
+        <div className="analytics-card metric-block">
+          <div className="analytics-card-header">
+            <div className="analytics-header-title">
+              <Layers size={15} style={{ color: '#f0b429' }} />
+              <h3>First Failed Validation Stage</h3>
+            </div>
+            <Badge tone="amber">{Object.keys(live.first_failed_stages).length} stages failed</Badge>
+          </div>
+
+          <div className="analytics-card-body">
+            {Object.keys(live.first_failed_stages).length > 0 ? (
+              Object.entries(live.first_failed_stages)
+                .sort((a, b) => b[1] - a[1])
+                .map(([stage, count]) => {
+                  const pct = totalDecisions > 0 ? ((count / totalDecisions) * 100).toFixed(1) : '0';
+                  return (
+                    <div
+                      key={stage}
+                      className="analytics-bar-row bar-row clickable"
+                      onClick={() => onNavigate && onNavigate('timeline')}
+                      title={`Inspect stage failures in Attack Timeline`}
+                    >
+                      <span className="analytics-bar-label bar-label">{STAGE_LABELS[stage] ?? stage}</span>
+                      <div className="analytics-bar-track bar-track">
+                        <div
+                          className="analytics-bar-fill bar-fill amber"
+                          style={{ width: `${(count / maxStage) * 100}%` }}
+                        />
+                      </div>
+                      <span className="analytics-bar-count bar-value">
+                        {count} <small>({pct}%)</small>
+                      </span>
+                    </div>
+                  );
+                })
+            ) : (
+              <div className="analytics-empty-message">
+                <CheckCircle2 size={26} strokeWidth={1.5} style={{ color: '#5ec269' }} />
+                <p className="metric-none">No validation stage has halted in this session yet.</p>
+                <small>Every evaluated command completed the full validation pipeline.</small>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== 5. COMPLETE REASON CODE REGISTRY ==================== */}
+      <div className="analytics-card metric-block">
+        <div className="analytics-card-header">
+          <div className="analytics-header-title">
+            <Radio size={15} style={{ color: '#347de5' }} />
+            <h3>Reason-Code Distribution Registry</h3>
+          </div>
+          <span className="metrics-last-updated">
+            Total outcomes: <strong>{totalDecisions}</strong>
+          </span>
+        </div>
+
+        <div className="analytics-card-body">
+          {Object.keys(live.reason_code_breakdown).length > 0 ? (
+            <div className="reason-registry-grid code-grid">
+              {Object.entries(live.reason_code_breakdown)
+                .sort((a, b) => b[1] - a[1])
+                .map(([code, count]) => {
+                  const isOk = code === 'OK';
+                  const pct = totalDecisions > 0 ? ((count / totalDecisions) * 100).toFixed(1) : '0';
+                  return (
+                    <div key={code} className={`registry-cell ${isOk ? 'ok' : ''}`}>
+                      <code>{code}</code>
+                      <strong>
+                        {count} <small>({pct}%)</small>
+                      </strong>
+                    </div>
+                  );
+                })}
+            </div>
+          ) : (
+            <p className="metric-none" style={{ margin: 0 }}>
+              No messages have been evaluated to establish a reason-code distribution yet.
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* ==================== 6. ISOLATED SCENARIO SUITES ==================== */}
+      <div className="scenario-suites-section">
+        <div className="suites-header">
+          <div className="suites-title-group">
+            <h3>
+              <FlaskConical size={16} />
+              Isolated Scenario Benchmark Suites
+            </h3>
+            <span className="isolation-badge">ISOLATED NAMESPACE</span>
+          </div>
+          {onNavigate && (
+            <button className="metrics-action-btn sm" onClick={() => onNavigate('scenarios')}>
+              Open Scenario Lab
+              <ExternalLink size={12} />
+            </button>
+          )}
+        </div>
+
+        <p className="suites-desc metric-note">
+          {suite.note ||
+            'Executes in an isolated session namespace with synthetic time injections. Benchmarks are never commingled into the live operational telemetry above.'}
+        </p>
+
+        <div className="suites-kpi-row metric-cards compact">
+          <div className="suite-kpi-box metric-card">
+            <span className="suite-kpi-label metric-label">Suite Runs</span>
+            <span className="suite-kpi-val metric-value">{suite.runs}</span>
+          </div>
+          <div className="suite-kpi-box metric-card">
+            <span className="suite-kpi-label metric-label">Cases Executed</span>
+            <span className="suite-kpi-val metric-value">{suite.cases_executed}</span>
+          </div>
+          <div className="suite-kpi-box metric-card">
+            <span className="suite-kpi-label metric-label">Cases Passed</span>
+            <span className="suite-kpi-val green metric-value">{suite.cases_passed}</span>
+          </div>
+          <div className="suite-kpi-box metric-card">
+            <span className="suite-kpi-label metric-label">Cases Failed</span>
+            <span
+              className={`suite-kpi-val ${suite.cases_failed > 0 ? 'red' : 'green'} metric-value`}
+            >
+              {suite.cases_failed}
+            </span>
+          </div>
+        </div>
+
+        <div className="suite-integrity-banner integrity-flag">
+          <span>Protected-State Integrity Violations Reported by Suites</span>
+          <Badge tone={suite.protected_state_integrity_violations ? 'red' : 'green'}>
+            {suite.protected_state_integrity_violations === 0
+              ? '0 Violations (Integrity Verified)'
+              : `${suite.protected_state_integrity_violations} Violations Detected`}
+          </Badge>
+        </div>
+      </div>
+
+      {/* ==================== 7. ANOMALY DETECTION PANEL ==================== */}
+      {anomalies && (
+        <div className="anomalies-section metric-block anomaly-block">
+          <div className="anomalies-header">
+            <div className="anomalies-title-group">
+              <h3>
+                <AlertTriangle size={16} style={{ color: '#f0b429' }} />
+                Synthetic Telemetry Anomaly Detection
+              </h3>
+              <Badge tone={anomalies.finding_count > 0 ? 'amber' : 'green'}>
+                {anomalies.finding_count} {anomalies.finding_count === 1 ? 'Finding' : 'Findings'}
+              </Badge>
+            </div>
+            {onNavigate && (
+              <button className="metrics-action-btn sm" onClick={() => onNavigate('timeline')}>
+                Inspect in Timeline
+                <ExternalLink size={12} />
+              </button>
+            )}
+          </div>
+
+          <p className="anomalies-disclaimer-text metric-note">{anomalies.disclaimer}</p>
+
+          {anomalies.finding_count > 0 ? (
+            <div className="anomalies-list anomaly-list">
+              {anomalies.findings.map((f, i) => (
+                <div key={i} className="anomaly-finding-item anomaly-row">
+                  <div className="anomaly-finding-left">
+                    <Badge tone="amber">{f.rule}</Badge>
+                    <span className="anomaly-desc">{f.detail}</span>
+                  </div>
+                  <code className="anomaly-event-ref">
+                    {f.event_id ? f.event_id.slice(0, 8) + '…' : '—'}
+                  </code>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="anomaly-clean-state">
+              <CheckCheck size={16} />
+              <span>No anomaly rules fired on the accepted telemetry in this session.</span>
+            </div>
+          )}
+
+          {/* Anomaly Rules Engine Reference Drawer */}
+          {anomalies.rules && anomalies.rules.length > 0 && (
+            <div className="anomaly-rules-drawer">
+              <button
+                className="rules-toggle-btn"
+                onClick={() => setShowRules(!showRules)}
+                aria-expanded={showRules}
+              >
+                {showRules ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+                <span>
+                  {showRules ? 'Hide' : 'View'} rule detection boundaries ({anomalies.rules.length} rules)
+                </span>
+              </button>
+
+              {showRules && (
+                <div className="rules-definitions-grid">
+                  {anomalies.rules.map((r) => (
+                    <div key={r.rule} className="rule-def-card">
+                      <div className="rule-def-header">
+                        <span className="rule-def-name">{r.rule}</span>
+                      </div>
+                      <p>{r.description}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  );
 }

@@ -480,7 +480,7 @@ class Engine:
                    (event.get('session_id'), event.get('event_id'),
                     self._chain_hash(prev, covered), prev, covered.decode('utf-8')))
 
-    def verify_audit_chain(self, session=None):
+    def verify_audit_chain(self, session=None, db=None):
         """Verify the hash-linked audit log.
 
         Detects: modification of a covered record's contents, broken links, and
@@ -488,9 +488,11 @@ class Engine:
         chain existed are reported as UNCOVERED, never silently repaired and never
         treated as failures.
         """
-        with self.connect() as db:
-            rows = db.execute('SELECT seq,session,event_id,record_hash,prev_hash,covered FROM audit_chain ORDER BY seq').fetchall()
-            audit_rows = {r[0]: r[1] for r in db.execute('SELECT id,event FROM audit').fetchall()}
+        if db is None:
+            with self.connect() as conn:
+                return self.verify_audit_chain(session, conn)
+        rows = db.execute('SELECT seq,session,event_id,record_hash,prev_hash,covered FROM audit_chain ORDER BY seq').fetchall()
+        audit_rows = {r[0]: r[1] for r in db.execute('SELECT id,event FROM audit').fetchall()}
         problems, previous = [], CHAIN_GENESIS
         expected_seq = None
         for index, row in enumerate(rows):
@@ -634,7 +636,8 @@ class Engine:
                 checks[idx].update(status='FAIL', explanation=exc.explanation)
                 verdict, code, explanation = 'REJECTED', exc.code, exc.explanation
                 after, telemetry_after = dict(before), telemetry_before
-            event = dict(event_id=str(uuid.uuid4()),session_id=sid,verdict=verdict,reason_code=code,explanation=explanation,checks=checks,sender_verified=verified,received_at=now,protected_state_before=before,protected_state_after=after,state_changed=before != after,telemetry_before=telemetry_before,telemetry_after=telemetry_after,policy_version=POLICY,input_sha256=hashlib.sha256(raw).hexdigest(),message=self.safe_message(message),duration_ms=round((time.perf_counter()-started)*1000,2))
+            first_failed_stage = checks[idx]['stage'] if verdict == 'REJECTED' else None
+            event = dict(event_id=str(uuid.uuid4()),session_id=sid,verdict=verdict,reason_code=code,explanation=explanation,checks=checks,sender_verified=verified,received_at=now,protected_state_before=before,protected_state_after=after,state_changed=before != after,telemetry_before=telemetry_before,telemetry_after=telemetry_after,policy_version=POLICY,input_sha256=hashlib.sha256(raw).hexdigest(),message=self.safe_message(message),duration_ms=round((time.perf_counter()-started)*1000,2),first_failed_stage=first_failed_stage)
             event.update(input_truncated=input_truncated, input_hash_scope='first 8193 bytes; full oversized body was not retained' if input_truncated else 'complete received input', audit_persisted=True, replay_state_advanced=verdict == 'ACCEPTED', replay_sequence_before=replay_before, replay_sequence_after=message['sequence'] if verdict == 'ACCEPTED' else replay_before)
             if verdict == 'ACCEPTED':
                 event['submitted_text'] = raw.decode('utf-8')  # bounded, validated envelope; enables byte-exact replay
@@ -648,8 +651,9 @@ class Engine:
             if db is not None:
                 with suppress(sqlite3.Error):
                     db.rollback()
-            checks[min(idx,7)].update(status='FAIL', explanation='Service failure. Transaction rolled back; no execution committed and no persistence claimed.')
-            return {'verdict':'SERVICE_ERROR','reason_code':'SERVICE_ERROR','explanation':'No execution committed. Database or validator service failed.','checks':checks,'sender_verified':verified,'state_changed':False,'policy_version':POLICY,'session_id':sid,'protected_state_before':before,'protected_state_after':before,'audit_persisted':False,'replay_state_advanced':False,'replay_sequence_before':replay_before,'replay_sequence_after':replay_before,'message':self.safe_message(message)}
+            failed_stage_idx = min(idx, 7)
+            checks[failed_stage_idx].update(status='FAIL', explanation='Service failure. Transaction rolled back; no execution committed and no persistence claimed.')
+            return {'verdict':'SERVICE_ERROR','reason_code':'SERVICE_ERROR','explanation':'No execution committed. Database or validator service failed.','checks':checks,'sender_verified':verified,'state_changed':False,'policy_version':POLICY,'session_id':sid,'protected_state_before':before,'protected_state_after':before,'audit_persisted':False,'replay_state_advanced':False,'replay_sequence_before':replay_before,'replay_sequence_after':replay_before,'message':self.safe_message(message),'first_failed_stage':checks[failed_stage_idx]['stage']}
         finally:
             if db is not None:
                 with suppress(sqlite3.Error):
@@ -821,14 +825,19 @@ class Engine:
                 'reason_code': event.get('reason_code')}
 
     def export(self, session=None):
-        sid = session or self.active_session()
         with self.connect() as db:
             db.execute('BEGIN')  # Consistent read-only snapshot of state and evidence.
+            sid = session or self.active_session(db)
             snapshot = self.state(sid, db)
             events = [json.loads(r[0]) for r in db.execute('SELECT event FROM audit WHERE session=? ORDER BY rowid',(sid,))]
+            for event in events:
+                if 'first_failed_stage' not in event:
+                    failed = next((c['stage'] for c in event.get('checks') or [] if c.get('status') == 'FAIL'), None)
+                    event['first_failed_stage'] = failed or REASON_STAGE.get(event.get('reason_code'))
             suites = [json.loads(r[0]) for r in db.execute('SELECT result FROM suites WHERE session=?',(sid,))]
+            audit_chain = self.verify_audit_chain(sid, db)
             db.commit()
-        return {'label':'Synthetic data — local simulation only. Not immutable or tamper-proof.','schema_version':1,'policy_version':POLICY,'exported_at':int(time.time()),'session_id':sid,'state':snapshot,'events':events,'scenario_results':suites,'audit_chain':self.verify_audit_chain(sid)}
+        return {'label':'Synthetic data — local simulation only. Not immutable or tamper-proof.','schema_version':1,'policy_version':POLICY,'exported_at':int(time.time()),'session_id':sid,'state':snapshot,'events':events,'scenario_results':suites,'audit_chain':audit_chain}
 
     def scenarios(self, owner_session=None):
         sid, now = self.new_session(False), 1792137600

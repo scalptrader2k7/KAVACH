@@ -12,7 +12,7 @@ const stageMeta = [
  ['replay','Replay protection','Previously accepted ID and sequence checks',RotateCcw],
  ['commit','State commit','Atomic state, replay and audit commit',CheckCheck],
 ] as const;
-export function ValidationPipeline({result,busy,onInspect,onHelp,expectation=null,prototypeOnly=false}:{result:Decision|null;busy:string;onInspect:(d:Decision)=>void;onHelp:()=>void;expectation?:string|null;prototypeOnly?:boolean}){
+export function ValidationPipeline({result,busy,onInspect,onHelp,expectation=null,prototypeOnly=false,operational=false}:{result:Decision|null;busy:string;onInspect:(d:Decision)=>void;onHelp:()=>void;expectation?:string|null;prototypeOnly?:boolean;operational?:boolean}){
  const accepted=result?.verdict==='ACCEPTED',rejected=result?.verdict==='REJECTED',pending=busy==='submit';
  const failed=result?.checks?.find(c=>c.status==='FAIL');
  const completed=result?.checks?.filter(c=>c.status==='PASS').length??0;
@@ -26,9 +26,9 @@ export function ValidationPipeline({result,busy,onInspect,onHelp,expectation=nul
   <div className="trace-heading"><h3>Validation pipeline</h3><span>{pending?'Awaiting trace':result?`${completed} / 8 passed`:'8 ordered checks'}</span><button title="Read validation policy" onClick={onHelp}><Info size={14}/></button></div>
   <div className="receiver-route" aria-hidden="true"><span>Message integrity</span><ArrowRight size={12}/><span>Access & freshness</span><ArrowRight size={12}/><span>Commit</span></div>
   <div className="pipeline-list">{stageMeta.map(([key,label,description,Icon],i)=>{
-   const check=result?.checks?.find(c=>c.stage===key),status=check?.status??'WAITING';
+   const check=result?.checks?.find(c=>c.stage===key),status=check?.status??(operational&&pending?'PENDING':'WAITING');
    return <details key={`${result?.event_id??result?.reason_code??'idle'}-${key}`} className={'pipeline-step '+status.toLowerCase()} open={status==='FAIL'}>
-    <summary><span className="step-rail"><span className="step-icon">{status==='PASS'?<Check size={14}/>:status==='FAIL'?<X size={14}/>:<Icon size={14}/>}</span>{i<7&&<span className="rail-line"/>}</span><span className="stage-index">{String(i+1).padStart(2,'0')}</span><span className="step-name">{prototypeOnly&&key==='commit'?'Apply preview state':label}</span><span className={'step-status '+status.toLowerCase()}>{status==='WAITING'?'Ready':status==='NOT_RUN'?'Not run':status==='PASS'?'Passed':'Failed'}</span><ChevronDown className="stage-chevron" size={12}/></summary>
+    <summary><span className="step-rail"><span className="step-icon">{status==='PASS'?<Check size={14}/>:status==='FAIL'?<X size={14}/>:<Icon size={14}/>}</span>{i<7&&<span className="rail-line"/>}</span><span className="stage-index">{String(i+1).padStart(2,'0')}</span><span className="step-name">{prototypeOnly&&key==='commit'?'Apply preview state':label}</span><span className={'step-status '+status.toLowerCase()}>{status==='PENDING'?'Pending':status==='WAITING'?'Ready':status==='NOT_RUN'?'Not run':status==='PASS'?'Passed':'Failed'}</span><ChevronDown className="stage-chevron" size={12}/></summary>
     <p className="stage-explanation">{check?.explanation??(prototypeOnly&&key==='commit'?'In-memory update; no database':description)}</p>
    </details>;
   })}</div>
